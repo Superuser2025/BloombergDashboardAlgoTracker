@@ -1,0 +1,209 @@
+═══════════════════════════════════════════════════════════════════════════════
+  RESPONSIVE SYSTEM - VISUAL BEHAVIOR GUIDE
+═══════════════════════════════════════════════════════════════════════════════
+
+HOW THE SYSTEM ADAPTS TO YOUR SCREEN:
+
+═══════════════════════════════════════════════════════════════════════════════
+SCENARIO 1: LAPTOP (1366x768 or smaller)
+═══════════════════════════════════════════════════════════════════════════════
+
+WHAT YOU SEE:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  [PORTFOLIO] [RISK] [SCENARIO] [VISUAL] [ALERTS] [JOURNAL] [SIZING]  ← TABS│
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│   PORTFOLIO ANALYTICS DASHBOARD                     Header: 16px           │
+│   Integrated System | Real-Time Analysis            Labels: 11px           │
+│                                                      Metrics: 20px          │
+│   ┌─────────────────────────────────────────┐                              │
+│   │  Total P&L: +$12,450.00                │  ← Abbreviated labels         │
+│   │  Equity: $125,340                       │                              │
+│   │  Daily P&L: +$340                       │                              │
+│   │  Win%: 68.5%                            │                              │
+│   │  Max DD: -8.2%                          │  ← Compact spacing            │
+│   └─────────────────────────────────────────┘                              │
+│                                                                             │
+│   [Algo 1]  +$450   [Algo 2]  +$123                ← Single line cards     │
+│   [Algo 3]  -$50    [Algo 4]  +$890                                        │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+CHARACTERISTICS:
+✓ Tab bar at top
+✓ Only ONE module visible (click tabs to switch)
+✓ Compact fonts (16/20/11)
+✓ Panel width: 780px
+✓ Tight spacing (10px between elements)
+✓ Abbreviated text (P&L, Win%, DD)
+
+═══════════════════════════════════════════════════════════════════════════════
+SCENARIO 2: DESKTOP (1920x1080)
+═══════════════════════════════════════════════════════════════════════════════
+
+WHAT YOU SEE:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│   PORTFOLIO ANALYTICS DASHBOARD                     Header: 22px           │
+│   Integrated System | Real-Time Analysis | Professional Grade              │
+│                                                      Labels: 14px           │
+│   ┌───────────────────────────────────────────────────────┐                │
+│   │  Total Profit & Loss: +$12,450.00                    │  ← Full labels │
+│   │  Total Equity: $125,340.25                           │                 │
+│   │  Daily Profit: +$340.00                              │  Metrics: 28px │
+│   │  Win Rate: 68.5%                                     │                 │
+│   │  Max Drawdown: -8.2%                                 │                 │
+│   └───────────────────────────────────────────────────────┘                │
+│                                                                             │
+│   ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐           │
+│   │ Algorithm 1     │  │ Algorithm 2     │  │ Algorithm 3     │           │
+│   │ P&L: +$450      │  │ P&L: +$123      │  │ P&L: -$50       │           │
+│   │ Magic: 12345    │  │ Magic: 67890    │  │ Magic: 11111    │           │
+│   └─────────────────┘  └─────────────────┘  └─────────────────┘           │
+│                                                                             │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                        ← 20px spacing                                       │
+│   ADVANCED RISK ANALYTICS                                                   │
+│   [Full risk module visible]                                                │
+│                                                                             │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│   VISUAL ANALYTICS                                                          │
+│   [Full visual module visible]                                              │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+CHARACTERISTICS:
+✓ NO tab bar
+✓ ALL modules stacked vertically (when toggled on)
+✓ Standard fonts (22/28/14)
+✓ Panel width: 1000px
+✓ Normal spacing (20px between panels)
+✓ Full text labels
+
+═══════════════════════════════════════════════════════════════════════════════
+SCENARIO 3: 4K MONITOR (3840x2160)
+═══════════════════════════════════════════════════════════════════════════════
+
+WHAT YOU SEE:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│   PORTFOLIO ANALYTICS DASHBOARD                     Header: 26px           │
+│   Integrated System | Real-Time Analysis | Professional Grade              │
+│                                                      Labels: 16px           │
+│   ┌─────────────────────────────────────────────────────────────┐          │
+│   │                                                              │          │
+│   │  Total Profit & Loss: +$12,450.00                          │          │
+│   │                                                     Metrics: 32px      │
+│   │  Total Equity: $125,340.25                                 │          │
+│   │                                                              │          │
+│   │  Daily Profit: +$340.00                                    │          │
+│   │                                                              │          │
+│   └─────────────────────────────────────────────────────────────┘          │
+│                                                                             │
+│   ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐        │
+│   │ Algorithm 1      │  │ Algorithm 2      │  │ Algorithm 3      │        │
+│   │                  │  │                  │  │                  │        │
+│   │ P&L: +$450       │  │ P&L: +$123       │  │ P&L: -$50        │        │
+│   │ Magic: 12345     │  │ Magic: 67890     │  │ Magic: 11111     │        │
+│   │                  │  │                  │  │                  │        │
+│   └──────────────────┘  └──────────────────┘  └──────────────────┘        │
+│                                                                             │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                        ← 30px spacing (generous)                            │
+│   ADVANCED RISK ANALYTICS                                                   │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+CHARACTERISTICS:
+✓ NO tab bar
+✓ ALL modules stacked vertically
+✓ Larger fonts (26/32/16) for readability at distance
+✓ Panel width: 1200px
+✓ Generous spacing (30px between panels)
+✓ Full text with extra breathing room
+
+═══════════════════════════════════════════════════════════════════════════════
+TAB SWITCHING BEHAVIOR (Small Screens Only)
+═══════════════════════════════════════════════════════════════════════════════
+
+INITIAL STATE:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  [PORTFOLIO✓] [RISK] [SCENARIO] [VISUAL] [ALERTS] [JOURNAL] [SIZING]       │
+│  ↑ Green (active)   ↑ Gray (inactive)                                      │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  [Portfolio content displayed]                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+USER CLICKS "RISK" TAB:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  [PORTFOLIO] [RISK✓] [SCENARIO] [VISUAL] [ALERTS] [JOURNAL] [SIZING]       │
+│               ↑ Green (active)                                              │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  [Risk analytics content displayed]                                         │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+USER CLICKS "VISUAL" TAB:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  [PORTFOLIO] [RISK] [SCENARIO] [VISUAL✓] [ALERTS] [JOURNAL] [SIZING]       │
+│                                  ↑ Green (active)                           │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  [Visual analytics with charts displayed]                                   │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+SCREEN SIZE BREAKPOINTS
+═══════════════════════════════════════════════════════════════════════════════
+
+< 1366px width:
+   → SMALL SCREEN MODE
+   → Tabbed layout
+   → Compact everything
+   → Perfect for: Laptops, small monitors, portable displays
+
+1366px - 1920px width:
+   → MEDIUM SCREEN MODE
+   → Full stacked layout
+   → Standard sizes
+   → Perfect for: Full HD monitors, standard desktops
+
+> 1920px width:
+   → LARGE SCREEN MODE
+   → Full stacked layout
+   → Large sizes
+   → Perfect for: 4K monitors, ultra-wide displays, trading setups
+
+═══════════════════════════════════════════════════════════════════════════════
+ADAPTIVE BEHAVIOR EXAMPLES
+═══════════════════════════════════════════════════════════════════════════════
+
+EXAMPLE 1: Starting on laptop, moving to desktop
+1. You start MT5 on laptop (1366px)
+2. Dashboard detects SMALL screen → Shows tabs
+3. You drag MT5 window to external monitor (1920px)
+4. Dashboard detects MEDIUM screen → Removes tabs, shows all panels
+5. Automatic adaptation!
+
+EXAMPLE 2: Resizing MT5 window
+1. You have dashboard on large monitor (2560px)
+2. You resize MT5 window smaller (1200px)
+3. Dashboard detects size change → Switches to tabbed mode
+4. Immediate adaptation!
+
+EXAMPLE 3: Multi-monitor setup
+1. Small laptop screen (1366px) → Tabbed mode
+2. Large external monitor (2560px) → Full stacked mode
+3. Dashboard adapts to whichever screen it's on!
+
+═══════════════════════════════════════════════════════════════════════════════
+KEY BENEFITS
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ ONE dashboard works EVERYWHERE
+✅ NO manual configuration needed
+✅ AUTOMATIC adaptation
+✅ ALWAYS readable fonts
+✅ OPTIMAL layout for your screen
+✅ PROFESSIONAL appearance on all devices
+
+═══════════════════════════════════════════════════════════════════════════════

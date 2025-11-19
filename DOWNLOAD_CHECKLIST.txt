@@ -1,0 +1,44 @@
+═══════════════════════════════════════════════════════════════════════════════
+  DOWNLOAD CHECKLIST - ALL 18 FILES
+═══════════════════════════════════════════════════════════════════════════════
+
+DOWNLOAD EVERY FILE BELOW:
+
+MAIN FILE (1):
+□ PortfolioAnalyticsDashboard_Integrated.mq5
+
+CORE FILES (3):
+□ Core_DataStructures.mqh
+□ Core_UIHelpers.mqh
+□ Core_DataCollection.mqh
+
+MODULE FILES (7):
+□ Module_AdvancedRisk.mqh
+□ Module_ScenarioSimulator.mqh
+□ Module_VisualAnalytics.mqh
+□ Module_SmartAlerts.mqh
+□ Module_TradeJournal.mqh
+□ Module_PositionSizing.mqh
+□ Module_CorrelationMatrix.mqh
+
+RENDER FILES (7):
+□ Module_AdvancedRisk_Render.mqh
+□ Module_ScenarioSimulator_Render.mqh
+□ Module_VisualAnalytics_Render.mqh
+□ Module_SmartAlerts_Render.mqh
+□ Module_TradeJournal_Render.mqh
+□ Module_PositionSizing_Render.mqh
+□ Module_CorrelationMatrix_Render.mqh
+
+═══════════════════════════════════════════════════════════════════════════════
+
+TOTAL: 18 FILES
+
+After downloading all 18 files:
+1. Delete old files from MQL5/Indicators/
+2. Copy all 18 new files to MQL5/Indicators/
+3. Open MetaEditor
+4. Compile PortfolioAnalyticsDashboard_Integrated.mq5
+5. Check for 0 errors!
+
+═══════════════════════════════════════════════════════════════════════════════
