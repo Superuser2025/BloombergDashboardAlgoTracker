@@ -550,7 +550,7 @@ int RenderMainDashboard(int start_y) {
 
    int stat_x = PanelX + 70;
    int stat_y = y + 20;
-   int stat_spacing = 240;
+   int stat_spacing = 265;  // Increased spacing to prevent overlap
 
    // Margin Level with risk indicator
    CreateLbl(PREFIX + "margin_label", stat_x, stat_y, "MARGIN LEVEL", C'156,163,175', 10, "Arial", Corner);
@@ -590,23 +590,30 @@ int RenderMainDashboard(int start_y) {
    string best_name = (StringLen(portfolio.best_algo) > 12) ? StringSubstr(portfolio.best_algo, 0, 12) + "..." : portfolio.best_algo;
    CreateLbl(PREFIX + "best_name", stat_x + stat_spacing * 4, stat_y + 50, best_name, C'156,163,175', 9, "Arial Bold", Corner);
 
+   // CRITICAL: Increment Y after stats card!
+   y += 100;  // Stats card height (90) + spacing
+
    // ========== ALGORITHM PERFORMANCE OVERVIEW ==========
    CreateSectionHeader(PREFIX + "algo_header", PanelX + 30, y, MainPanelWidth - 60,
                       "ALGORITHM PERFORMANCE", "▣", ColorHeader, Corner);
 
    y += 60;
 
-   // Performance Score Legend
+   // Performance Score Legend - split into two lines to prevent overlap
    CreateLbl(PREFIX + "legend_label", PanelX + 50, y,
-            "Score based on: Win Rate (35%) • Profit Factor (15%) • Drawdown (10%) • Sharpe Ratio (10%) • Expectancy (15%) • Risk Mgmt (15%)",
+            "Score Criteria: Win Rate (35%) • Profit Factor (15%) • Drawdown (10%)",
+            C'156,163,175', 9, "Arial Italic", Corner);
+   CreateLbl(PREFIX + "legend_label2", PanelX + 50, y + 14,
+            "Sharpe Ratio (10%) • Expectancy (15%) • Risk Management (15%)",
             C'156,163,175', 9, "Arial Italic", Corner);
 
-   y += 25;
+   y += 40;  // Increased from 25 to account for two lines
 
    // Algorithm Performance Cards (Top 5 performers)
    int display_count = MathMin(algo_count, 5);
    if(display_count > 0) {
       int perf_card_height = 70;
+      int card_spacing_y = 10;  // Spacing between cards
       int perf_y = y;
 
       for(int i = 0; i < display_count; i++) {
@@ -680,7 +687,7 @@ int RenderMainDashboard(int start_y) {
          CreateLbl(PREFIX + "algo_dd_" + IntegerToString(i), PanelX + 1000, perf_y + 20,
                   dd_text, dd_clr, 11, "Arial Bold", Corner);
 
-         perf_y += perf_card_height + 8;
+         perf_y += perf_card_height + card_spacing_y;
       }
 
       y = perf_y;
@@ -697,11 +704,11 @@ int RenderMainDashboard(int start_y) {
       CreateLbl(PREFIX + "more_algos", PanelX + 50, y,
                StringFormat("+ %d more algorithms (expand modules for full view)", algo_count - 5),
                C'156,163,175', 10, "Arial Italic", Corner);
-      y += 25;
+      y += 35;
    }
 
    // ========== MODULE ACCESS CONTROLS ==========
-   y += 10;
+   y += 20;  // More spacing before module buttons
    CreateSectionHeader(PREFIX + "modules_header", PanelX + 30, y, MainPanelWidth - 60,
                       "ADVANCED ANALYTICS MODULES", "☰", ColorInfo, Corner);
 
