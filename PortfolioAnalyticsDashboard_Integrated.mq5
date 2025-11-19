@@ -634,16 +634,17 @@ int RenderMainDashboard(int start_y) {
          CreateLbl(PREFIX + "algo_name_" + IntegerToString(i), PanelX + 95, perf_y + 8,
                   display_name, ColorText, 13, "Arial Black", Corner);
 
-         // Symbols (ELON'S REQUEST!)
+         // Symbols (ELON'S REQUEST - SHOW ALL SYMBOLS!)
          string symbols_text = "";
          if(algos[i].symbol_count > 0) {
-            symbols_text = algos[i].symbols[0];
-            if(algos[i].symbol_count > 1) {
-               symbols_text += " +" + IntegerToString(algos[i].symbol_count - 1) + " more";
+            // Show ALL symbols, comma-separated
+            for(int s = 0; s < algos[i].symbol_count; s++) {
+               if(s > 0) symbols_text += ", ";
+               symbols_text += algos[i].symbols[s];
             }
          }
          CreateLbl(PREFIX + "algo_symbols_" + IntegerToString(i), PanelX + 95, perf_y + 27,
-                  "Symbols: " + symbols_text, C'156,163,175', 10, "Arial", Corner);
+                  "Symbols: " + symbols_text, ColorInfo, 10, "Arial Bold", Corner);
 
          // Performance Score (what status is based on)
          string score_text = StringFormat("Score: %.0f", algos[i].performance_score);
