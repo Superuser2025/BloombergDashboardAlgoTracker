@@ -290,7 +290,7 @@ void CreateGauge(string name, int x, int y, double value, string label, color go
 //+------------------------------------------------------------------+
 //| Create Mini Sparkline (Simple trend visualization)               |
 //+------------------------------------------------------------------+
-void CreateSparkline(string name, int x, int y, int width, double values[], int count,
+void CreateSparkline(string name, int x, int y, int width, double &values[], int count,
                      color line_color, ENUM_BASE_CORNER corner = CORNER_LEFT_UPPER) {
    if(count < 2) return;
 
