@@ -474,36 +474,33 @@ void RenderDashboard() {
 int RenderMainDashboard(int start_y) {
    int y = start_y;
 
-   // ========== MAIN CONTAINER ==========
-   // Dynamic height calculation will happen, but set a base
-   int container_height = 1000;  // Will adjust based on content
-   CreateCard(PREFIX + "main_container", PanelX, y, MainPanelWidth, container_height, ColorBg, C'55,65,81', Corner);
-
    // ========== PREMIUM HEADER ==========
-   CreateRect(PREFIX + "header_gradient1", PanelX, y, MainPanelWidth, 100, C'20,30,48', true, Corner);
+   CreateRect(PREFIX + "header_gradient1", PanelX, y, MainPanelWidth, 90, C'20,30,48', true, Corner);
    CreateRect(PREFIX + "header_gradient2", PanelX, y, MainPanelWidth, 3, ColorHeader, false, Corner);
 
    // Logo/Icon
-   CreateLbl(PREFIX + "logo", PanelX + 25, y + 18, "◆", ColorHeader, 36, "Arial Black", Corner);
+   CreateLbl(PREFIX + "logo", PanelX + 25, y + 18, "◆", ColorHeader, 32, "Arial Black", Corner);
 
    // Title
-   CreateLbl(PREFIX + "title", PanelX + 75, y + 18,
-            "PORTFOLIO COMMAND CENTER", ColorHeader, 26, "Arial Black", Corner);
+   CreateLbl(PREFIX + "title", PanelX + 70, y + 18,
+            "PORTFOLIO COMMAND CENTER", ColorHeader, 24, "Arial Black", Corner);
 
-   CreateLbl(PREFIX + "subtitle", PanelX + 75, y + 52,
-            "Real-Time Trading Intelligence • Advanced Risk Analytics • AI-Powered Insights",
-            C'156,163,175', 11, "Arial", Corner);
+   CreateLbl(PREFIX + "subtitle", PanelX + 70, y + 50,
+            "Real-Time Trading Intelligence • Professional Analytics",
+            C'156,163,175', 10, "Arial", Corner);
 
    // Live indicator
-   CreateRect(PREFIX + "live_dot", PanelX + 75, y + 72, 8, 8, C'34,197,94', false, Corner);
-   CreateLbl(PREFIX + "live_text", PanelX + 90, y + 68, "LIVE", C'34,197,94', 10, "Arial Bold", Corner);
+   CreateRect(PREFIX + "live_dot", PanelX + 70, y + 68, 6, 6, C'34,197,94', false, Corner);
+   CreateLbl(PREFIX + "live_text", PanelX + 82, y + 65, "LIVE", C'34,197,94', 9, "Arial Bold", Corner);
 
    // Control buttons (top right)
-   CreateActionBtn(PREFIX + "refresh", PanelX + MainPanelWidth - 280, y + 25, 120, 45,
+   CreateActionBtn(PREFIX + "refresh", PanelX + MainPanelWidth - 280, y + 20, 120, 45,
             "⟳", "REFRESH", C'59,130,246', clrWhite, Corner);
 
-   CreateActionBtn(PREFIX + "minimize", PanelX + MainPanelWidth - 150, y + 25, 120, 45,
+   CreateActionBtn(PREFIX + "minimize", PanelX + MainPanelWidth - 150, y + 20, 120, 45,
             "−", "MINIMIZE", C'55,65,81', ColorText, Corner);
+
+   y += 100;
 
    // ========== EXECUTIVE METRICS CARDS ==========
    int card_width = 320;
@@ -546,38 +543,6 @@ int RenderMainDashboard(int start_y) {
                    false, 0, ColorPanel, Corner);
 
    y += card_height + 30;
-
-   // ========== RISK & PERFORMANCE GAUGES ==========
-   CreateSectionHeader(PREFIX + "perf_header", PanelX + 30, y, MainPanelWidth - 60,
-                      "PERFORMANCE & RISK ANALYTICS", "■", ColorHeader, Corner);
-
-   y += 60;
-
-   int gauge_x = PanelX + 80;
-   int gauge_spacing = 170;
-
-   // Health Score Gauge
-   CreateGauge(PREFIX + "gauge_health", gauge_x, y, portfolio.health_score, "Health",
-              ColorGood, ColorWarning, ColorDanger, Corner);
-
-   // Diversification Score Gauge
-   CreateGauge(PREFIX + "gauge_div", gauge_x + gauge_spacing, y, portfolio.diversification_score,
-              "Diversification", ColorGood, ColorWarning, ColorDanger, Corner);
-
-   // Risk Score Gauge (inverted - lower is better)
-   double risk_display = 100 - portfolio.risk_score;
-   CreateGauge(PREFIX + "gauge_risk", gauge_x + gauge_spacing * 2, y, risk_display,
-              "Risk Control", ColorGood, ColorWarning, ColorDanger, Corner);
-
-   // Performance Score Gauge
-   CreateGauge(PREFIX + "gauge_perf", gauge_x + gauge_spacing * 3, y, portfolio.performance_score,
-              "Performance", ColorGood, ColorWarning, ColorDanger, Corner);
-
-   // Alignment Score Gauge
-   CreateGauge(PREFIX + "gauge_align", gauge_x + gauge_spacing * 4, y, portfolio.alignment_score,
-              "Alignment", ColorGood, ColorWarning, ColorDanger, Corner);
-
-   y += 110;
 
    // ========== KEY STATISTICS ROW ==========
    CreateCard(PREFIX + "stats_card", PanelX + 30, y, MainPanelWidth - 60, 90,
@@ -631,10 +596,17 @@ int RenderMainDashboard(int start_y) {
 
    y += 60;
 
+   // Performance Score Legend
+   CreateLbl(PREFIX + "legend_label", PanelX + 50, y,
+            "Score based on: Win Rate (35%) • Profit Factor (15%) • Drawdown (10%) • Sharpe Ratio (10%) • Expectancy (15%) • Risk Mgmt (15%)",
+            C'156,163,175', 9, "Arial Italic", Corner);
+
+   y += 25;
+
    // Algorithm Performance Cards (Top 5 performers)
    int display_count = MathMin(algo_count, 5);
    if(display_count > 0) {
-      int perf_card_height = 50;
+      int perf_card_height = 70;
       int perf_y = y;
 
       for(int i = 0; i < display_count; i++) {
@@ -644,47 +616,69 @@ int RenderMainDashboard(int start_y) {
          // Rank badge
          color rank_color = (i == 0) ? C'251,191,36' : (i == 1) ? C'209,213,219' :
                            (i == 2) ? C'205,127,50' : C'75,85,99';
-         CreateRect(PREFIX + "rank_" + IntegerToString(i), PanelX + 50, perf_y + 15, 30, 22,
+         CreateRect(PREFIX + "rank_" + IntegerToString(i), PanelX + 50, perf_y + 24, 30, 22,
                    rank_color, false, Corner);
-         CreateLbl(PREFIX + "rank_num_" + IntegerToString(i), PanelX + 60, perf_y + 18,
+         CreateLbl(PREFIX + "rank_num_" + IntegerToString(i), PanelX + 60, perf_y + 27,
                   IntegerToString(i + 1), clrWhite, 11, "Arial Black", Corner);
 
          // Algo name
-         string display_name = (StringLen(algos[i].name) > 20) ?
-                              StringSubstr(algos[i].name, 0, 20) + "..." : algos[i].name;
-         CreateLbl(PREFIX + "algo_name_" + IntegerToString(i), PanelX + 95, perf_y + 10,
-                  display_name, ColorText, 12, "Arial Bold", Corner);
+         string display_name = (StringLen(algos[i].name) > 18) ?
+                              StringSubstr(algos[i].name, 0, 18) + "..." : algos[i].name;
+         CreateLbl(PREFIX + "algo_name_" + IntegerToString(i), PanelX + 95, perf_y + 8,
+                  display_name, ColorText, 13, "Arial Black", Corner);
+
+         // Symbols (ELON'S REQUEST!)
+         string symbols_text = "";
+         if(algos[i].symbol_count > 0) {
+            symbols_text = algos[i].symbols[0];
+            if(algos[i].symbol_count > 1) {
+               symbols_text += " +" + IntegerToString(algos[i].symbol_count - 1) + " more";
+            }
+         }
+         CreateLbl(PREFIX + "algo_symbols_" + IntegerToString(i), PanelX + 95, perf_y + 27,
+                  "Symbols: " + symbols_text, C'156,163,175', 10, "Arial", Corner);
+
+         // Performance Score (what status is based on)
+         string score_text = StringFormat("Score: %.0f", algos[i].performance_score);
+         CreateLbl(PREFIX + "algo_score_" + IntegerToString(i), PanelX + 95, perf_y + 46,
+                  score_text, algos[i].status_color, 10, "Arial Bold", Corner);
 
          // Status badge
-         CreateBadge(PREFIX + "algo_status_" + IntegerToString(i), PanelX + 95, perf_y + 28,
+         CreateBadge(PREFIX + "algo_status_" + IntegerToString(i), PanelX + 95 + StringLen(score_text) * 6 + 15, perf_y + 44,
                     algos[i].status, algos[i].status_color, clrWhite, Corner);
 
-         // P&L
+         // P&L (BIG AND CLEAR!)
          string pl_text = StringFormat("$%.2f", algos[i].floating_pl);
          color algo_pl_color = (algos[i].floating_pl >= 0) ? ColorGood : ColorDanger;
-         CreateLbl(PREFIX + "algo_pl_" + IntegerToString(i), PanelX + 450, perf_y + 16,
-                  pl_text, algo_pl_color, 14, "Arial Black", Corner);
+         CreateLbl(PREFIX + "algo_pl_label_" + IntegerToString(i), PanelX + 550, perf_y + 8,
+                  "P&L:", C'156,163,175', 10, "Arial", Corner);
+         CreateLbl(PREFIX + "algo_pl_" + IntegerToString(i), PanelX + 550, perf_y + 24,
+                  pl_text, algo_pl_color, 18, "Arial Black", Corner);
 
          // Win Rate
          string wr_text = StringFormat("%.1f%%", algos[i].win_rate);
          color wr_clr = (algos[i].win_rate >= 60) ? ColorGood :
                        (algos[i].win_rate >= 40) ? ColorWarning : ColorDanger;
-         CreateLbl(PREFIX + "algo_wr_" + IntegerToString(i), PanelX + 650, perf_y + 16,
-                  "Win: " + wr_text, wr_clr, 11, "Arial", Corner);
+         CreateLbl(PREFIX + "algo_wr_label_" + IntegerToString(i), PanelX + 720, perf_y + 8,
+                  "Win Rate:", C'156,163,175', 10, "Arial", Corner);
+         CreateLbl(PREFIX + "algo_wr_" + IntegerToString(i), PanelX + 720, perf_y + 24,
+                  wr_text, wr_clr, 14, "Arial Black", Corner);
 
-         // Volume
+         // Volume & Positions
          string vol_text = StringFormat("%.2f lots", algos[i].total_lots);
-         CreateLbl(PREFIX + "algo_vol_" + IntegerToString(i), PanelX + 800, perf_y + 16,
-                  vol_text, C'156,163,175', 11, "Arial", Corner);
+         CreateLbl(PREFIX + "algo_vol_" + IntegerToString(i), PanelX + 850, perf_y + 12,
+                  vol_text, C'156,163,175', 10, "Arial", Corner);
 
-         // Positions
          string pos_count = StringFormat("%d pos", algos[i].pos_count);
-         CreateLbl(PREFIX + "algo_pos_" + IntegerToString(i), PanelX + 980, perf_y + 16,
-                  pos_count, C'156,163,175', 11, "Arial", Corner);
+         CreateLbl(PREFIX + "algo_pos_" + IntegerToString(i), PanelX + 850, perf_y + 30,
+                  pos_count, C'156,163,175', 10, "Arial", Corner);
 
-         // Risk Score
-         CreateRiskIndicator(PREFIX + "algo_risk_" + IntegerToString(i), PanelX + 1120, perf_y + 12,
-                           algos[i].max_dd_pct * 5, "", Corner);  // Scale DD to 0-100
+         // Drawdown
+         string dd_text = StringFormat("DD: %.1f%%", algos[i].max_dd_pct);
+         color dd_clr = (algos[i].max_dd_pct < 10) ? ColorGood :
+                       (algos[i].max_dd_pct < 20) ? ColorWarning : ColorDanger;
+         CreateLbl(PREFIX + "algo_dd_" + IntegerToString(i), PanelX + 1000, perf_y + 20,
+                  dd_text, dd_clr, 11, "Arial Bold", Corner);
 
          perf_y += perf_card_height + 8;
       }
