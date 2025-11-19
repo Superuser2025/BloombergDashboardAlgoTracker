@@ -232,18 +232,18 @@ void CreateMetricCard(string name, int x, int y, int w, int h, string value, str
    // Card with depth
    CreateCard(name, x, y, w, h, bg_color, C'55,65,81', corner);
 
-   // Large value
-   CreateLbl(name + "_value", x + 20, y + 15, value, value_color, 32, "Arial Black", corner);
+   // Label at top (small, subtle)
+   CreateLbl(name + "_label", x + 20, y + 12, label, C'156,163,175', 10, "Arial", corner);
 
-   // Label below
-   CreateLbl(name + "_label", x + 20, y + 55, label, C'156,163,175', 11, "Arial", corner);
+   // Large value in center
+   CreateLbl(name + "_value", x + 20, y + 35, value, value_color, 28, "Arial Black", corner);
 
-   // Trend indicator
+   // Trend indicator at bottom
    if(show_trend) {
       string trend_text = StringFormat("%+.1f%%", trend_pct);
       color trend_color = (trend_pct >= 0) ? C'34,197,94' : C'239,68,68';
       string arrow = (trend_pct >= 0) ? "▲ " : "▼ ";
-      CreateLbl(name + "_trend", x + 20, y + 75, arrow + trend_text, trend_color, 10, "Arial Bold", corner);
+      CreateLbl(name + "_trend", x + 20, y + 75, arrow + trend_text, trend_color, 11, "Arial Bold", corner);
    }
 }
 
