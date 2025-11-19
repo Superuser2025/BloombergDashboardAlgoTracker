@@ -1,14 +1,27 @@
 //+------------------------------------------------------------------+
 //|                  PortfolioAnalyticsDashboard_Integrated.mq5      |
-//|                INTEGRATED PORTFOLIO ANALYTICS SYSTEM             |
-//|          Main Dashboard + Toggleable Modules (One Indicator)     |
+//|                    PORTFOLIO COMMAND CENTER v3.0                 |
+//|             Premium Trading Intelligence & Risk Analytics        |
+//|                                                                   |
+//|  "A Dashboard Worthy of the Future" - Premium Edition           |
+//|                                                                   |
+//|  Features:                                                        |
+//|  • Executive Dashboard with Real-Time KPIs                       |
+//|  • Advanced Performance Gauges & Risk Indicators                 |
+//|  • Beautiful Card-Based UI with Depth & Shadows                  |
+//|  • AI-Powered Trading Analytics                                  |
+//|  • Multi-Algorithm Portfolio Tracking                            |
+//|  • Comprehensive Risk Management Suite                           |
+//|  • Professional Grade Visual Design                              |
+//|                                                                   |
 //+------------------------------------------------------------------+
-#property copyright "Professional Trading Intelligence"
-#property version   "2.00"
+#property copyright "Professional Trading Intelligence • Premium Edition"
+#property version   "3.00"
 #property indicator_chart_window
 #property indicator_plots 0
-#property description "Integrated Portfolio Analytics Dashboard"
-#property description "Main Dashboard + Advanced Risk + Scenario Simulator"
+#property description "Portfolio Command Center - Premium Trading Dashboard"
+#property description "Executive Analytics • Real-Time Intelligence • Professional Design"
+#property description "Engineered for Professional Traders & Portfolio Managers"
 
 // Include all modules
 #include "Core_DataStructures.mqh"
@@ -460,185 +473,397 @@ void RenderDashboard() {
 //+------------------------------------------------------------------+
 int RenderMainDashboard(int start_y) {
    int y = start_y;
-   
-   // Main background
-   CreateRect(PREFIX + "main_bg", PanelX, y, MainPanelWidth, 600, ColorBg, true, Corner);
-   
-   // Header
-   CreateRect(PREFIX + "header_bg", PanelX, y, MainPanelWidth, 90, ColorPanel, true, Corner);
-   
-   CreateLbl(PREFIX + "title", PanelX + 30, y + 20,
-            "PORTFOLIO ANALYTICS DASHBOARD", ColorHeader, HeaderFontSize, "Arial Black", Corner);
-   
-   CreateLbl(PREFIX + "subtitle", PanelX + 30, y + 58,
-            "Integrated System | Real-Time Analysis | Professional Grade",
-            ColorInfo, LabelFontSize, "Arial", Corner);
-   
-   // Control buttons
-   CreateBtn(PREFIX + "refresh", PanelX + MainPanelWidth - 430, y + 25, 120, 40,
-            "REFRESH", ColorText, C'55,65,81', Corner);
-   
-   CreateBtn(PREFIX + "minimize", PanelX + MainPanelWidth - 300, y + 25, 120, 40,
-            "MINIMIZE", ColorText, C'55,65,81', Corner);
-   
-   // Module toggle buttons
-   color risk_btn_color = show_risk_panel ? ColorInfo : C'55,65,81';
-   CreateBtn(PREFIX + "toggle_risk", PanelX + MainPanelWidth - 170, y + 25, 140, 40,
-            show_risk_panel ? "HIDE RISK" : "SHOW RISK", ColorText, risk_btn_color, Corner);
-   
-   y += 100;
-   
-   color scenario_btn_color = show_scenario_panel ? ColorInfo : C'55,65,81';
-   CreateBtn(PREFIX + "toggle_scenario", PanelX + 30, y, 200, 40,
-            show_scenario_panel ? "HIDE SCENARIO" : "SHOW SCENARIO", 
-            ColorText, scenario_btn_color, Corner);
-   
-   color visual_btn_color = show_visual_panel ? ColorInfo : C'55,65,81';
-   CreateBtn(PREFIX + "toggle_visual", PanelX + 250, y, 200, 40,
-            show_visual_panel ? "HIDE VISUAL" : "SHOW VISUAL",
-            ColorText, visual_btn_color, Corner);
-   
-   color alerts_btn_color = show_alerts_panel ? ColorInfo : C'55,65,81';
-   CreateBtn(PREFIX + "toggle_alerts", PanelX + 470, y, 200, 40,
-            show_alerts_panel ? "HIDE ALERTS" : "SHOW ALERTS",
-            ColorText, alerts_btn_color, Corner);
-   
-   y += 50;
-   
-   // Second row of module buttons
-   color journal_btn_color = show_journal_panel ? ColorInfo : C'55,65,81';
-   CreateBtn(PREFIX + "toggle_journal", PanelX + 30, y, 200, 40,
-            show_journal_panel ? "HIDE JOURNAL" : "SHOW JOURNAL",
-            ColorText, journal_btn_color, Corner);
-   
-   color sizing_btn_color = show_sizing_panel ? ColorInfo : C'55,65,81';
-   CreateBtn(PREFIX + "toggle_sizing", PanelX + 250, y, 200, 40,
-            show_sizing_panel ? "HIDE SIZING" : "SHOW SIZING",
-            ColorText, sizing_btn_color, Corner);
-   
-   color correlation_btn_color = show_correlation_panel ? ColorInfo : C'55,65,81';
-   CreateBtn(PREFIX + "toggle_correlation", PanelX + 470, y, 200, 40,
-            show_correlation_panel ? "HIDE CORRELATION" : "SHOW CORRELATION",
-            ColorText, correlation_btn_color, Corner);
-   
-   y += 50;
-   
-   // Portfolio Summary
-   CreateRect(PREFIX + "summary_bg", PanelX + 30, y, MainPanelWidth - 60, 140,
-              ColorPanel, true, Corner);
-   
-   int curr_y = y + 20;
-   CreateLbl(PREFIX + "summary_title", PanelX + 50, curr_y,
-            "PORTFOLIO SUMMARY", ColorHeader, MetricFontSize, "Arial Black", Corner);
-   curr_y += MetricFontSize + 25;
-   
-   int col1 = PanelX + 70;
-   int col2 = PanelX + 400;
-   int col3 = PanelX + 730;
-   int col4 = PanelX + 1060;
-   
-   // Equity
-   CreateLbl(PREFIX + "equity_label", col1, curr_y,
-            "Equity:", ColorText, LabelFontSize, "Arial", Corner);
-   string equity_text = StringFormat("$%.2f", portfolio.equity);
-   CreateLbl(PREFIX + "equity_value", col1, curr_y + LabelFontSize + 5,
-            equity_text, ColorInfo, LabelFontSize + 8, "Arial Black", Corner);
-   
-   // Total P&L
-   CreateLbl(PREFIX + "pl_label", col2, curr_y,
-            "Total P&L:", ColorText, LabelFontSize, "Arial", Corner);
-   string pl_text = StringFormat("$%.2f", portfolio.total_realized_pl + portfolio.total_floating_pl);
-   color pl_color = (portfolio.total_realized_pl + portfolio.total_floating_pl >= 0) ? ColorGood : ColorDanger;
-   CreateLbl(PREFIX + "pl_value", col2, curr_y + LabelFontSize + 5,
-            pl_text, pl_color, LabelFontSize + 8, "Arial Black", Corner);
-   
-   // Margin Level
-   CreateLbl(PREFIX + "margin_label", col3, curr_y,
-            "Margin Level:", ColorText, LabelFontSize, "Arial", Corner);
-   string margin_text = StringFormat("%.1f%%", portfolio.margin_level);
+
+   // ========== MAIN CONTAINER ==========
+   // Dynamic height calculation will happen, but set a base
+   int container_height = 1000;  // Will adjust based on content
+   CreateCard(PREFIX + "main_container", PanelX, y, MainPanelWidth, container_height, ColorBg, C'55,65,81', Corner);
+
+   // ========== PREMIUM HEADER ==========
+   CreateRect(PREFIX + "header_gradient1", PanelX, y, MainPanelWidth, 100, C'20,30,48', true, Corner);
+   CreateRect(PREFIX + "header_gradient2", PanelX, y, MainPanelWidth, 3, ColorHeader, false, Corner);
+
+   // Logo/Icon
+   CreateLbl(PREFIX + "logo", PanelX + 25, y + 18, "◆", ColorHeader, 36, "Arial Black", Corner);
+
+   // Title
+   CreateLbl(PREFIX + "title", PanelX + 75, y + 18,
+            "PORTFOLIO COMMAND CENTER", ColorHeader, 26, "Arial Black", Corner);
+
+   CreateLbl(PREFIX + "subtitle", PanelX + 75, y + 52,
+            "Real-Time Trading Intelligence • Advanced Risk Analytics • AI-Powered Insights",
+            C'156,163,175', 11, "Arial", Corner);
+
+   // Live indicator
+   CreateRect(PREFIX + "live_dot", PanelX + 75, y + 72, 8, 8, C'34,197,94', false, Corner);
+   CreateLbl(PREFIX + "live_text", PanelX + 90, y + 68, "LIVE", C'34,197,94', 10, "Arial Bold", Corner);
+
+   // Control buttons (top right)
+   CreateActionBtn(PREFIX + "refresh", PanelX + MainPanelWidth - 280, y + 25, 120, 45,
+            "⟳", "REFRESH", C'59,130,246', clrWhite, Corner);
+
+   CreateActionBtn(PREFIX + "minimize", PanelX + MainPanelWidth - 150, y + 25, 120, 45,
+            "−", "MINIMIZE", C'55,65,81', ColorText, Corner);
+
+   // ========== EXECUTIVE METRICS CARDS ==========
+   int card_width = 320;
+   int card_height = 110;
+   int card_spacing = 25;
+   int card_y = y;
+
+   // Calculate daily P&L change (mock for now - would need historical data)
+   double total_pl = portfolio.total_realized_pl + portfolio.total_floating_pl;
+   double pl_change_pct = (portfolio.equity > 0) ? (total_pl / portfolio.equity * 100) : 0;
+
+   // Card 1: Total Equity
+   string equity_val = StringFormat("$%.0f", portfolio.equity);
+   CreateMetricCard(PREFIX + "card_equity", PanelX + 30, card_y, card_width, card_height,
+                   equity_val, "TOTAL EQUITY", ColorInfo, true, pl_change_pct, ColorPanel, Corner);
+
+   // Card 2: Total P&L
+   string pl_val = StringFormat("$%.0f", total_pl);
+   color pl_color = (total_pl >= 0) ? ColorGood : ColorDanger;
+   CreateMetricCard(PREFIX + "card_pl", PanelX + 30 + card_width + card_spacing, card_y,
+                   card_width, card_height, pl_val, "TOTAL P&L", pl_color,
+                   true, pl_change_pct, ColorPanel, Corner);
+
+   // Card 3: Win Rate
+   double avg_win_rate = 0;
+   for(int i = 0; i < algo_count; i++) {
+      avg_win_rate += algos[i].win_rate;
+   }
+   if(algo_count > 0) avg_win_rate /= algo_count;
+   string wr_val = StringFormat("%.1f%%", avg_win_rate);
+   color wr_color = (avg_win_rate >= 50) ? ColorGood : ColorDanger;
+   CreateMetricCard(PREFIX + "card_winrate", PanelX + 30 + (card_width + card_spacing) * 2, card_y,
+                   card_width, card_height, wr_val, "AVG WIN RATE", wr_color,
+                   false, 0, ColorPanel, Corner);
+
+   // Card 4: Active Algos
+   string algo_val = IntegerToString(algo_count);
+   CreateMetricCard(PREFIX + "card_algos", PanelX + 30 + (card_width + card_spacing) * 3, card_y,
+                   card_width, card_height, algo_val, "ACTIVE ALGORITHMS", ColorInfo,
+                   false, 0, ColorPanel, Corner);
+
+   y += card_height + 30;
+
+   // ========== RISK & PERFORMANCE GAUGES ==========
+   CreateSectionHeader(PREFIX + "perf_header", PanelX + 30, y, MainPanelWidth - 60,
+                      "PERFORMANCE & RISK ANALYTICS", "■", ColorHeader, Corner);
+
+   y += 60;
+
+   int gauge_x = PanelX + 80;
+   int gauge_spacing = 170;
+
+   // Health Score Gauge
+   CreateGauge(PREFIX + "gauge_health", gauge_x, y, portfolio.health_score, "Health",
+              ColorGood, ColorWarning, ColorDanger, Corner);
+
+   // Diversification Score Gauge
+   CreateGauge(PREFIX + "gauge_div", gauge_x + gauge_spacing, y, portfolio.diversification_score,
+              "Diversification", ColorGood, ColorWarning, ColorDanger, Corner);
+
+   // Risk Score Gauge (inverted - lower is better)
+   double risk_display = 100 - portfolio.risk_score;
+   CreateGauge(PREFIX + "gauge_risk", gauge_x + gauge_spacing * 2, y, risk_display,
+              "Risk Control", ColorGood, ColorWarning, ColorDanger, Corner);
+
+   // Performance Score Gauge
+   CreateGauge(PREFIX + "gauge_perf", gauge_x + gauge_spacing * 3, y, portfolio.performance_score,
+              "Performance", ColorGood, ColorWarning, ColorDanger, Corner);
+
+   // Alignment Score Gauge
+   CreateGauge(PREFIX + "gauge_align", gauge_x + gauge_spacing * 4, y, portfolio.alignment_score,
+              "Alignment", ColorGood, ColorWarning, ColorDanger, Corner);
+
+   y += 110;
+
+   // ========== KEY STATISTICS ROW ==========
+   CreateCard(PREFIX + "stats_card", PanelX + 30, y, MainPanelWidth - 60, 90,
+             ColorPanel, C'55,65,81', Corner);
+
+   int stat_x = PanelX + 70;
+   int stat_y = y + 20;
+   int stat_spacing = 240;
+
+   // Margin Level with risk indicator
+   CreateLbl(PREFIX + "margin_label", stat_x, stat_y, "MARGIN LEVEL", C'156,163,175', 10, "Arial", Corner);
+   string margin_text = StringFormat("%.0f%%", portfolio.margin_level);
    color margin_color = (portfolio.margin_level > 300) ? ColorGood :
                        (portfolio.margin_level > 200) ? ColorWarning : ColorDanger;
-   CreateLbl(PREFIX + "margin_value", col3, curr_y + LabelFontSize + 5,
-            margin_text, margin_color, LabelFontSize + 8, "Arial Black", Corner);
-   
-   // Active Algos
-   CreateLbl(PREFIX + "algos_label", col4, curr_y,
-            "Active Algos:", ColorText, LabelFontSize, "Arial", Corner);
-   string algos_text = IntegerToString(algo_count);
-   CreateLbl(PREFIX + "algos_value", col4, curr_y + LabelFontSize + 5,
-            algos_text, ColorInfo, LabelFontSize + 8, "Arial Black", Corner);
-   
-   y += 150;
-   
-   // Algo List (compact)
-   CreateRect(PREFIX + "algos_bg", PanelX + 30, y, MainPanelWidth - 60, 280,
-              ColorPanel, true, Corner);
-   
-   curr_y = y + 15;
-   CreateLbl(PREFIX + "algos_title", PanelX + 50, curr_y,
-            "ACTIVE ALGORITHMS", ColorHeader, LabelFontSize + 4, "Arial Black", Corner);
-   curr_y += LabelFontSize + 20;
-   
-   // Show top algos (max 6)
-   int display_count = MathMin(algo_count, 6);
-   for(int i = 0; i < display_count; i++) {
-      string algo_line = StringFormat("%s | %.2f lots | P&L: $%.2f | Win: %.1f%%",
-                                     algos[i].name,
-                                     algos[i].total_lots,
-                                     algos[i].floating_pl,
-                                     algos[i].win_rate);
-      
-      color line_color = (algos[i].floating_pl >= 0) ? ColorGood : ColorDanger;
-      CreateLbl(PREFIX + "algo_" + IntegerToString(i), PanelX + 60, curr_y,
-               algo_line, line_color, LabelFontSize, "Arial", Corner);
-      curr_y += LabelFontSize + 8;
+   CreateLbl(PREFIX + "margin_value", stat_x, stat_y + 18, margin_text, margin_color, 24, "Arial Black", Corner);
+   string margin_status = (portfolio.margin_level > 300) ? "HEALTHY" : (portfolio.margin_level > 200) ? "CAUTION" : "CRITICAL";
+   CreateLbl(PREFIX + "margin_status", stat_x, stat_y + 50, margin_status, margin_color, 9, "Arial Bold", Corner);
+
+   // Total Positions
+   CreateLbl(PREFIX + "pos_label", stat_x + stat_spacing, stat_y, "OPEN POSITIONS", C'156,163,175', 10, "Arial", Corner);
+   string pos_text = IntegerToString(portfolio.total_positions);
+   CreateLbl(PREFIX + "pos_value", stat_x + stat_spacing, stat_y + 18, pos_text, ColorInfo, 24, "Arial Black", Corner);
+   string pos_breakdown = StringFormat("↑%d  ↓%d", portfolio.total_buy, portfolio.total_sell);
+   CreateLbl(PREFIX + "pos_breakdown", stat_x + stat_spacing, stat_y + 50, pos_breakdown, C'156,163,175', 9, "Arial", Corner);
+
+   // Total Lots
+   CreateLbl(PREFIX + "lots_label", stat_x + stat_spacing * 2, stat_y, "TOTAL VOLUME", C'156,163,175', 10, "Arial", Corner);
+   string lots_text = StringFormat("%.2f", portfolio.total_lots);
+   CreateLbl(PREFIX + "lots_value", stat_x + stat_spacing * 2, stat_y + 18, lots_text, ColorInfo, 24, "Arial Black", Corner);
+   CreateLbl(PREFIX + "lots_units", stat_x + stat_spacing * 2, stat_y + 50, "LOTS", C'156,163,175', 9, "Arial Bold", Corner);
+
+   // Drawdown
+   CreateLbl(PREFIX + "dd_label", stat_x + stat_spacing * 3, stat_y, "DRAWDOWN", C'156,163,175', 10, "Arial", Corner);
+   string dd_text = StringFormat("%.1f%%", portfolio.drawdown_pct);
+   color dd_color = (portfolio.drawdown_pct < 5) ? ColorGood :
+                   (portfolio.drawdown_pct < 15) ? ColorWarning : ColorDanger;
+   CreateLbl(PREFIX + "dd_value", stat_x + stat_spacing * 3, stat_y + 18, dd_text, dd_color, 24, "Arial Black", Corner);
+   string dd_status = (portfolio.drawdown_pct < 5) ? "MINIMAL" : (portfolio.drawdown_pct < 15) ? "MODERATE" : "SEVERE";
+   CreateLbl(PREFIX + "dd_status", stat_x + stat_spacing * 3, stat_y + 50, dd_status, dd_color, 9, "Arial Bold", Corner);
+
+   // Best Performer
+   CreateLbl(PREFIX + "best_label", stat_x + stat_spacing * 4, stat_y, "TOP PERFORMER", C'156,163,175', 10, "Arial", Corner);
+   string best_pl_text = StringFormat("+$%.0f", portfolio.best_pl);
+   CreateLbl(PREFIX + "best_value", stat_x + stat_spacing * 4, stat_y + 18, best_pl_text, ColorGood, 24, "Arial Black", Corner);
+   string best_name = (StringLen(portfolio.best_algo) > 12) ? StringSubstr(portfolio.best_algo, 0, 12) + "..." : portfolio.best_algo;
+   CreateLbl(PREFIX + "best_name", stat_x + stat_spacing * 4, stat_y + 50, best_name, C'156,163,175', 9, "Arial Bold", Corner);
+
+   // ========== ALGORITHM PERFORMANCE OVERVIEW ==========
+   CreateSectionHeader(PREFIX + "algo_header", PanelX + 30, y, MainPanelWidth - 60,
+                      "ALGORITHM PERFORMANCE", "▣", ColorHeader, Corner);
+
+   y += 60;
+
+   // Algorithm Performance Cards (Top 5 performers)
+   int display_count = MathMin(algo_count, 5);
+   if(display_count > 0) {
+      int perf_card_height = 50;
+      int perf_y = y;
+
+      for(int i = 0; i < display_count; i++) {
+         CreateCard(PREFIX + "algo_card_" + IntegerToString(i), PanelX + 40, perf_y,
+                   MainPanelWidth - 80, perf_card_height, ColorPanel, C'55,65,81', Corner);
+
+         // Rank badge
+         color rank_color = (i == 0) ? C'251,191,36' : (i == 1) ? C'209,213,219' :
+                           (i == 2) ? C'205,127,50' : C'75,85,99';
+         CreateRect(PREFIX + "rank_" + IntegerToString(i), PanelX + 50, perf_y + 15, 30, 22,
+                   rank_color, false, Corner);
+         CreateLbl(PREFIX + "rank_num_" + IntegerToString(i), PanelX + 60, perf_y + 18,
+                  IntegerToString(i + 1), clrWhite, 11, "Arial Black", Corner);
+
+         // Algo name
+         string display_name = (StringLen(algos[i].name) > 20) ?
+                              StringSubstr(algos[i].name, 0, 20) + "..." : algos[i].name;
+         CreateLbl(PREFIX + "algo_name_" + IntegerToString(i), PanelX + 95, perf_y + 10,
+                  display_name, ColorText, 12, "Arial Bold", Corner);
+
+         // Status badge
+         CreateBadge(PREFIX + "algo_status_" + IntegerToString(i), PanelX + 95, perf_y + 28,
+                    algos[i].status, algos[i].status_color, clrWhite, Corner);
+
+         // P&L
+         string pl_text = StringFormat("$%.2f", algos[i].floating_pl);
+         color algo_pl_color = (algos[i].floating_pl >= 0) ? ColorGood : ColorDanger;
+         CreateLbl(PREFIX + "algo_pl_" + IntegerToString(i), PanelX + 450, perf_y + 16,
+                  pl_text, algo_pl_color, 14, "Arial Black", Corner);
+
+         // Win Rate
+         string wr_text = StringFormat("%.1f%%", algos[i].win_rate);
+         color wr_clr = (algos[i].win_rate >= 60) ? ColorGood :
+                       (algos[i].win_rate >= 40) ? ColorWarning : ColorDanger;
+         CreateLbl(PREFIX + "algo_wr_" + IntegerToString(i), PanelX + 650, perf_y + 16,
+                  "Win: " + wr_text, wr_clr, 11, "Arial", Corner);
+
+         // Volume
+         string vol_text = StringFormat("%.2f lots", algos[i].total_lots);
+         CreateLbl(PREFIX + "algo_vol_" + IntegerToString(i), PanelX + 800, perf_y + 16,
+                  vol_text, C'156,163,175', 11, "Arial", Corner);
+
+         // Positions
+         string pos_count = StringFormat("%d pos", algos[i].pos_count);
+         CreateLbl(PREFIX + "algo_pos_" + IntegerToString(i), PanelX + 980, perf_y + 16,
+                  pos_count, C'156,163,175', 11, "Arial", Corner);
+
+         // Risk Score
+         CreateRiskIndicator(PREFIX + "algo_risk_" + IntegerToString(i), PanelX + 1120, perf_y + 12,
+                           algos[i].max_dd_pct * 5, "", Corner);  // Scale DD to 0-100
+
+         perf_y += perf_card_height + 8;
+      }
+
+      y = perf_y;
+   } else {
+      // No algorithms running
+      CreateCard(PREFIX + "no_algos", PanelX + 40, y, MainPanelWidth - 80, 80,
+                ColorPanel, C'55,65,81', Corner);
+      CreateLbl(PREFIX + "no_algos_msg", PanelX + MainPanelWidth/2 - 150, y + 28,
+               "No active algorithms detected", C'156,163,175', 14, "Arial", Corner);
+      y += 90;
    }
-   
-   if(algo_count > 6) {
-      CreateLbl(PREFIX + "more_algos", PanelX + 60, curr_y,
-               StringFormat("... and %d more algos", algo_count - 6),
-               C'156,163,175', LabelFontSize - 1, "Arial", Corner);
+
+   if(algo_count > 5) {
+      CreateLbl(PREFIX + "more_algos", PanelX + 50, y,
+               StringFormat("+ %d more algorithms (expand modules for full view)", algo_count - 5),
+               C'156,163,175', 10, "Arial Italic", Corner);
+      y += 25;
    }
-   
-   return y + 290;
+
+   // ========== MODULE ACCESS CONTROLS ==========
+   y += 10;
+   CreateSectionHeader(PREFIX + "modules_header", PanelX + 30, y, MainPanelWidth - 60,
+                      "ADVANCED ANALYTICS MODULES", "☰", ColorInfo, Corner);
+
+   y += 60;
+
+   // Module buttons in a clean grid
+   int btn_width = 200;
+   int btn_height = 45;
+   int btn_spacing_x = 220;
+   int btn_spacing_y = 55;
+   int btn_start_x = PanelX + 60;
+   int btn_y = y;
+
+   // Row 1
+   color risk_btn_color = show_risk_panel ? C'59,130,246' : C'55,65,81';
+   CreateActionBtn(PREFIX + "toggle_risk", btn_start_x, btn_y, btn_width, btn_height,
+            "🛡", show_risk_panel ? "HIDE RISK" : "SHOW RISK", risk_btn_color, clrWhite, Corner);
+
+   color scenario_btn_color = show_scenario_panel ? C'59,130,246' : C'55,65,81';
+   CreateActionBtn(PREFIX + "toggle_scenario", btn_start_x + btn_spacing_x, btn_y, btn_width, btn_height,
+            "⚡", show_scenario_panel ? "HIDE SCENARIO" : "SHOW SCENARIO",
+            scenario_btn_color, clrWhite, Corner);
+
+   color visual_btn_color = show_visual_panel ? C'59,130,246' : C'55,65,81';
+   CreateActionBtn(PREFIX + "toggle_visual", btn_start_x + btn_spacing_x * 2, btn_y, btn_width, btn_height,
+            "📊", show_visual_panel ? "HIDE VISUAL" : "SHOW VISUAL",
+            visual_btn_color, clrWhite, Corner);
+
+   color alerts_btn_color = show_alerts_panel ? C'59,130,246' : C'55,65,81';
+   CreateActionBtn(PREFIX + "toggle_alerts", btn_start_x + btn_spacing_x * 3, btn_y, btn_width, btn_height,
+            "🔔", show_alerts_panel ? "HIDE ALERTS" : "SHOW ALERTS",
+            alerts_btn_color, clrWhite, Corner);
+
+   // Alert badge if there are active alerts
+   if(alert_data.active_count > 0) {
+      CreateAlertBadge(PREFIX + "alert_badge", btn_start_x + btn_spacing_x * 3 + btn_width - 10,
+                      btn_y - 5, alert_data.active_count, C'239,68,68', Corner);
+   }
+
+   // Row 2
+   btn_y += btn_spacing_y;
+
+   color journal_btn_color = show_journal_panel ? C'59,130,246' : C'55,65,81';
+   CreateActionBtn(PREFIX + "toggle_journal", btn_start_x, btn_y, btn_width, btn_height,
+            "📝", show_journal_panel ? "HIDE JOURNAL" : "SHOW JOURNAL",
+            journal_btn_color, clrWhite, Corner);
+
+   color sizing_btn_color = show_sizing_panel ? C'59,130,246' : C'55,65,81';
+   CreateActionBtn(PREFIX + "toggle_sizing", btn_start_x + btn_spacing_x, btn_y, btn_width, btn_height,
+            "⚖", show_sizing_panel ? "HIDE SIZING" : "SHOW SIZING",
+            sizing_btn_color, clrWhite, Corner);
+
+   color correlation_btn_color = show_correlation_panel ? C'59,130,246' : C'55,65,81';
+   CreateActionBtn(PREFIX + "toggle_correlation", btn_start_x + btn_spacing_x * 2, btn_y, btn_width, btn_height,
+            "🔗", show_correlation_panel ? "HIDE CORRELATION" : "SHOW CORRELATION",
+            correlation_btn_color, clrWhite, Corner);
+
+   return btn_y + btn_height + 40;
 }
 
 //+------------------------------------------------------------------+
 //| Render Minimized                                                  |
 //+------------------------------------------------------------------+
 void RenderMinimized() {
-   int h = 80;
-   CreateRect(PREFIX + "mini_bg", PanelX, PanelY, 650, h, ColorPanel, true, Corner);
-   
-   CreateLbl(PREFIX + "mini_title", PanelX + 20, PanelY + 15,
-            "PORTFOLIO ANALYTICS", ColorHeader, LabelFontSize + 4, "Arial Black", Corner);
-   
-   string status = StringFormat("%.0f algos | Equity: $%.2f | P&L: $%.2f",
-                               algo_count, portfolio.equity,
-                               portfolio.total_realized_pl + portfolio.total_floating_pl);
-   CreateLbl(PREFIX + "mini_status", PanelX + 20, PanelY + 45,
-            status, ColorText, LabelFontSize + 2, "Arial", Corner);
-   
-   CreateBtn(PREFIX + "maximize", PanelX + 500, PanelY + 20, 130, 40,
-            "MAXIMIZE", ColorText, C'55,65,81', Corner);
+   int h = 90;
+   int w = 850;
+
+   // Premium minimized bar with depth
+   CreateCard(PREFIX + "mini_container", PanelX, PanelY, w, h, C'20,30,48', C'55,65,81', Corner);
+
+   // Top accent line
+   CreateRect(PREFIX + "mini_accent", PanelX, PanelY, w, 3, ColorHeader, false, Corner);
+
+   // Icon
+   CreateLbl(PREFIX + "mini_icon", PanelX + 20, PanelY + 18, "◆", ColorHeader, 28, "Arial Black", Corner);
+
+   // Title
+   CreateLbl(PREFIX + "mini_title", PanelX + 60, PanelY + 18,
+            "PORTFOLIO COMMAND CENTER", ColorHeader, 16, "Arial Black", Corner);
+
+   // Live indicator
+   CreateRect(PREFIX + "mini_live_dot", PanelX + 60, PanelY + 48, 6, 6, C'34,197,94', false, Corner);
+   CreateLbl(PREFIX + "mini_live", PanelX + 72, PanelY + 45, "LIVE", C'34,197,94', 9, "Arial Bold", Corner);
+
+   // Quick stats
+   double total_pl = portfolio.total_realized_pl + portfolio.total_floating_pl;
+   color pl_color = (total_pl >= 0) ? ColorGood : ColorDanger;
+   string pl_arrow = (total_pl >= 0) ? "▲" : "▼";
+
+   string quick_stats = StringFormat("%s $%.0f  •  %d Algos  •  $%.0f Equity  •  %.0f%% Margin",
+                                     pl_arrow, MathAbs(total_pl), algo_count,
+                                     portfolio.equity, portfolio.margin_level);
+
+   CreateLbl(PREFIX + "mini_stats", PanelX + 60, PanelY + 62,
+            quick_stats, ColorText, 11, "Arial", Corner);
+
+   // Maximize button
+   CreateActionBtn(PREFIX + "maximize", PanelX + w - 140, PanelY + 25, 120, 45,
+            "+", "EXPAND", C'59,130,246', clrWhite, Corner);
 }
 
 //+------------------------------------------------------------------+
 //| Status Bar                                                         |
 //+------------------------------------------------------------------+
 void RenderStatusBar() {
-   int y = (int)ChartGetInteger(0, CHART_HEIGHT_IN_PIXELS) - 35;
-   string status = StringFormat("Last Update: %s | Risk: %s | Scenario: %s | Visual: %s | Alerts: %s | Journal: %s | Sizing: %s | Correlation: %s",
-                               TimeToString(last_update, TIME_SECONDS),
-                               show_risk_panel ? "ON" : "OFF",
-                               show_scenario_panel ? "ON" : "OFF",
-                               show_visual_panel ? "ON" : "OFF",
-                               show_alerts_panel ? "ON" : "OFF",
-                               show_journal_panel ? "ON" : "OFF",
-                               show_sizing_panel ? "ON" : "OFF",
-                               show_correlation_panel ? "ON" : "OFF");
-   CreateLbl(PREFIX + "status", PanelX + 30, y,
-            "> " + status, ColorInfo, LabelFontSize, "Arial", Corner);
+   int bar_height = 40;
+   int y = (int)ChartGetInteger(0, CHART_HEIGHT_IN_PIXELS) - bar_height - 5;
+
+   // Premium status bar
+   CreateCard(PREFIX + "status_bar", PanelX, y, MainPanelWidth, bar_height,
+             C'20,30,48', C'55,65,81', Corner);
+
+   // Timestamp with icon
+   CreateLbl(PREFIX + "status_icon", PanelX + 20, y + 12, "⟳", C'34,197,94', 14, "Arial Black", Corner);
+   string time_text = StringFormat("Last Update: %s", TimeToString(last_update, TIME_SECONDS));
+   CreateLbl(PREFIX + "status_time", PanelX + 45, y + 13, time_text, C'156,163,175', 11, "Arial", Corner);
+
+   // Module indicators with dots
+   int indicator_x = PanelX + 300;
+   int dot_spacing = 140;
+
+   // Risk
+   color risk_dot = show_risk_panel ? C'34,197,94' : C'55,65,81';
+   CreateRect(PREFIX + "risk_dot", indicator_x, y + 16, 8, 8, risk_dot, false, Corner);
+   CreateLbl(PREFIX + "risk_status", indicator_x + 15, y + 13, "RISK", C'156,163,175', 10, "Arial", Corner);
+
+   // Scenario
+   color scenario_dot = show_scenario_panel ? C'34,197,94' : C'55,65,81';
+   CreateRect(PREFIX + "scenario_dot", indicator_x + dot_spacing, y + 16, 8, 8, scenario_dot, false, Corner);
+   CreateLbl(PREFIX + "scenario_status", indicator_x + dot_spacing + 15, y + 13, "SCENARIO", C'156,163,175', 10, "Arial", Corner);
+
+   // Visual
+   color visual_dot = show_visual_panel ? C'34,197,94' : C'55,65,81';
+   CreateRect(PREFIX + "visual_dot", indicator_x + dot_spacing * 2, y + 16, 8, 8, visual_dot, false, Corner);
+   CreateLbl(PREFIX + "visual_status", indicator_x + dot_spacing * 2 + 15, y + 13, "VISUAL", C'156,163,175', 10, "Arial", Corner);
+
+   // Alerts
+   color alerts_dot = show_alerts_panel ? C'34,197,94' : C'55,65,81';
+   CreateRect(PREFIX + "alerts_dot", indicator_x + dot_spacing * 3, y + 16, 8, 8, alerts_dot, false, Corner);
+   CreateLbl(PREFIX + "alerts_status", indicator_x + dot_spacing * 3 + 15, y + 13, "ALERTS", C'156,163,175', 10, "Arial", Corner);
+
+   // System health indicator
+   double system_health = (portfolio.health_score + portfolio.performance_score) / 2.0;
+   color health_color = (system_health >= 70) ? C'34,197,94' :
+                       (system_health >= 40) ? C'251,191,36' : C'239,68,68';
+   string health_text = (system_health >= 70) ? "OPTIMAL" :
+                       (system_health >= 40) ? "STABLE" : "ATTENTION";
+
+   CreateLbl(PREFIX + "health_label", PanelX + MainPanelWidth - 180, y + 8,
+            "SYSTEM STATUS", C'156,163,175', 9, "Arial", Corner);
+   CreateLbl(PREFIX + "health_value", PanelX + MainPanelWidth - 180, y + 22,
+            health_text, health_color, 11, "Arial Black", Corner);
+
+   // Version indicator
+   CreateLbl(PREFIX + "version", PanelX + MainPanelWidth - 60, y + 13,
+            "v3.0", C'75,85,99', 9, "Arial", Corner);
 }
 
 //+------------------------------------------------------------------+
