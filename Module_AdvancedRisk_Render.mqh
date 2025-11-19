@@ -39,8 +39,8 @@ void RenderAdvancedRiskPanel(AdvancedRiskMetrics &risk,
    int panel_x = 20;
    int y = start_y;
    
-   // Main background
-   CreateRect(PREFIX + "main_bg", panel_x, y, panel_width, 1100, bg_color, true, corner);
+   // Main background - REDUCED HEIGHT to fit on screen
+   CreateRect(PREFIX + "main_bg", panel_x, y, panel_width, 700, bg_color, true, corner);
    
    // Header
    CreateRect(PREFIX + "header_bg", panel_x, y, panel_width, 70, panel_color, true, corner);

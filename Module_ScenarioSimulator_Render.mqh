@@ -46,8 +46,8 @@ void RenderScenarioSimulatorPanel(ScenarioResult &current_scenario,
    int panel_x = 20;
    int y = start_y;
    
-   // Main background
-   CreateRect(OBJ_PREFIX + "main_bg", panel_x, y, panel_width, 950, bg_color, true, corner);
+   // Main background - REDUCED HEIGHT to fit on screen
+   CreateRect(OBJ_PREFIX + "main_bg", panel_x, y, panel_width, 650, bg_color, true, corner);
    
    // Header
    CreateRect(OBJ_PREFIX + "header_bg", panel_x, y, panel_width, 70, panel_color, true, corner);

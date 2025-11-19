@@ -409,7 +409,7 @@ void RenderDashboard() {
                              HeaderFontSize, MetricFontSize, LabelFontSize,
                              ColorHeader, ColorGood, ColorWarning, ColorDanger,
                              ColorInfo, ColorBg, ColorPanel, ColorText);
-      y += 1120;
+      y += 720;  // Reduced from 1120 to fit on screen
    }
    
    if(show_scenario_panel) {
@@ -418,7 +418,7 @@ void RenderDashboard() {
                                    HeaderFontSize, MetricFontSize, LabelFontSize,
                                    ColorHeader, ColorGood, ColorWarning, ColorDanger,
                                    ColorInfo, ColorBg, ColorPanel, ColorText);
-      y += 970;
+      y += 670;  // Reduced from 970 to fit on screen
    }
    
    if(show_visual_panel) {
@@ -427,7 +427,7 @@ void RenderDashboard() {
                                  HeaderFontSize, MetricFontSize, LabelFontSize,
                                  ColorHeader, ColorGood, ColorWarning, ColorDanger,
                                  ColorInfo, ColorBg, ColorPanel, ColorText);
-      y += 1200;
+      y += 770;  // Reduced from 1200 to fit on screen
    }
    
    if(show_alerts_panel) {

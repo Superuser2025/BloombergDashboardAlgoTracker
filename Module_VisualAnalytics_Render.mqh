@@ -35,10 +35,10 @@ void RenderVisualAnalyticsPanel(VisualAnalyticsData &data,
    const string OBJ_PREFIX = "VISUAL_";
    int panel_x = 20;
    int y = start_y;
-   
-   // Main background
-   CreateRect(OBJ_PREFIX + "main_bg", panel_x, y, panel_width, 1200, bg_color, true, corner);
-   
+
+   // Main background - REDUCED HEIGHT to fit on screen
+   CreateRect(OBJ_PREFIX + "main_bg", panel_x, y, panel_width, 750, bg_color, true, corner);
+
    // Header
    CreateRect(OBJ_PREFIX + "header_bg", panel_x, y, panel_width, 70, panel_color, true, corner);
    
