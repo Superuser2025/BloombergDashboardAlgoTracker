@@ -461,13 +461,12 @@ void RunScenario() {
 void RenderDashboard() {
    CleanupObjects(PREFIX);
 
+   // ========== RENDER MAIN DASHBOARD (FULL OR MINIMIZED) ==========
    if(is_main_minimized) {
       RenderMinimized();
-      return;
+   } else {
+      RenderMainDashboard(PanelY);
    }
-
-   // ========== ALWAYS RENDER MAIN DASHBOARD ==========
-   RenderMainDashboard(PanelY);
 
    // ========== RENDER MODULE PANELS ON TOP (OVERLAPPING) ==========
    // These panels appear as modal overlays on top of the main dashboard
