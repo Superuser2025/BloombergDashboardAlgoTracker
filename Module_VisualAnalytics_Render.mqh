@@ -118,31 +118,41 @@ int RenderEquityCurve(VisualAnalyticsData &data, int x, int y, int width,
    for(int i = 0; i < data.equity_points - 1; i++) {
       int x1 = chart_x + (int)(i * x_step);
       int x2 = chart_x + (int)((i + 1) * x_step);
-      
+
       double y1_pct = (data.equity_curve[i].equity - data.min_equity) / range;
       double y2_pct = (data.equity_curve[i+1].equity - data.min_equity) / range;
-      
+
       int y1 = chart_y + chart_height - (int)(y1_pct * chart_height);
       int y2 = chart_y + chart_height - (int)(y2_pct * chart_height);
-      
-      string line_name = OBJ_PREFIX + "eq_line_" + IntegerToString(i);
-      ObjectCreate(0, line_name, OBJ_TREND, 0, 0, 0);
-      ObjectSetInteger(0, line_name, OBJPROP_CORNER, corner);
-      ObjectSetInteger(0, line_name, OBJPROP_XDISTANCE, x1);
-      ObjectSetInteger(0, line_name, OBJPROP_YDISTANCE, y1);
-      ObjectSetInteger(0, line_name, OBJPROP_XSIZE, x2 - x1);
-      ObjectSetInteger(0, line_name, OBJPROP_YSIZE, y2 - y1);
-      ObjectSetInteger(0, line_name, OBJPROP_COLOR, info_color);
-      ObjectSetInteger(0, line_name, OBJPROP_WIDTH, 2);
-      ObjectSetInteger(0, line_name, OBJPROP_BACK, false);
-      ObjectSetInteger(0, line_name, OBJPROP_SELECTABLE, false);
-      ObjectSetInteger(0, line_name, OBJPROP_HIDDEN, true);
-      
+
+      // Draw line as a series of small rectangles (2px wide line)
+      int dx = x2 - x1;
+      int dy = y2 - y1;
+      int line_width = 3;
+
+      if(MathAbs(dx) > MathAbs(dy)) {
+         // More horizontal - draw rectangles along X axis
+         for(int px = 0; px <= dx; px += 2) {
+            int curr_x = x1 + px;
+            int curr_y = y1 + (int)((double)px / dx * dy);
+            CreateRect(OBJ_PREFIX + "eq_pt_" + IntegerToString(i) + "_" + IntegerToString(px),
+                      curr_x, curr_y - line_width/2, 2, line_width, info_color, false, corner);
+         }
+      } else {
+         // More vertical - draw rectangles along Y axis
+         for(int py = 0; py <= MathAbs(dy); py += 2) {
+            int curr_y = (dy > 0) ? (y1 + py) : (y1 - py);
+            int curr_x = x1 + (int)((double)py / MathAbs(dy) * dx);
+            CreateRect(OBJ_PREFIX + "eq_pt_" + IntegerToString(i) + "_" + IntegerToString(py),
+                      curr_x - line_width/2, curr_y, line_width, 2, info_color, false, corner);
+         }
+      }
+
       // Shade drawdown area
       if(data.equity_curve[i].is_underwater) {
          int shade_y = chart_y + chart_height - (int)(y1_pct * chart_height);
          int shade_h = chart_height - shade_y + chart_y;
-         
+
          CreateRect(OBJ_PREFIX + "eq_dd_" + IntegerToString(i), x1, shade_y,
                    (int)x_step, shade_h, C'139,0,0,30', true, corner);
       }
@@ -207,7 +217,7 @@ int RenderPerformanceHeatmap(VisualAnalyticsData &data, int x, int y, int width,
       int cell_y = grid_y + (day * (cell_size + cell_spacing));
       
       CreateRect(OBJ_PREFIX + "heat_cell_" + IntegerToString(i), cell_x, cell_y,
-                cell_size, cell_size, data.heatmap[i].cell_color, true, corner);
+                cell_size, cell_size, data.heatmap[i].cell_color, false, corner);
    }
    
    // Legend
@@ -275,7 +285,7 @@ int RenderWinLossDistribution(VisualAnalyticsData &data, int x, int y, int width
       if(bar_h > 0) {
          CreateRect(OBJ_PREFIX + "dist_win_" + IntegerToString(i),
                    bar_x, bar_y + max_bar_height - bar_h,
-                   bar_width, bar_h, good_color, true, corner);
+                   bar_width, bar_h, good_color, false, corner);
       }
       
       bar_x += bar_width + bar_spacing;
@@ -291,7 +301,7 @@ int RenderWinLossDistribution(VisualAnalyticsData &data, int x, int y, int width
       if(bar_h > 0) {
          CreateRect(OBJ_PREFIX + "dist_loss_" + IntegerToString(i),
                    bar_x, bar_y + max_bar_height - bar_h,
-                   bar_width, bar_h, danger_color, true, corner);
+                   bar_width, bar_h, danger_color, false, corner);
       }
       
       bar_x += bar_width + bar_spacing;
@@ -341,7 +351,7 @@ int RenderMonthlyPerformance(VisualAnalyticsData &data, int x, int y, int width,
       int cell_y = curr_y + (row * (cell_h + cell_spacing));
       
       CreateRect(OBJ_PREFIX + "month_cell_" + IntegerToString(i), cell_x, cell_y,
-                cell_w, cell_h, data.monthly[i].cell_color, true, corner);
+                cell_w, cell_h, data.monthly[i].cell_color, false, corner);
       
       string month_text = StringFormat("%s %d: %.2f%%",
                                       months[data.monthly[i].month],
