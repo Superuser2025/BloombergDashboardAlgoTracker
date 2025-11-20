@@ -458,18 +458,19 @@ void CreateCloseButton(string name, int panel_x, int panel_y, int panel_width,
    int btn_y = panel_y + 15;
 
    // Create actual BUTTON object (clickable)
-   ObjectCreate(0, name + "_close_bg", OBJ_BUTTON, 0, 0, 0);
-   ObjectSetInteger(0, name + "_close_bg", OBJPROP_CORNER, corner);
-   ObjectSetInteger(0, name + "_close_bg", OBJPROP_XDISTANCE, btn_x);
-   ObjectSetInteger(0, name + "_close_bg", OBJPROP_YDISTANCE, btn_y);
-   ObjectSetInteger(0, name + "_close_bg", OBJPROP_XSIZE, btn_size);
-   ObjectSetInteger(0, name + "_close_bg", OBJPROP_YSIZE, btn_size);
-   ObjectSetString(0, name + "_close_bg", OBJPROP_TEXT, "✕");
-   ObjectSetInteger(0, name + "_close_bg", OBJPROP_COLOR, clrWhite);
-   ObjectSetInteger(0, name + "_close_bg", OBJPROP_BGCOLOR, C'239,68,68');
-   ObjectSetInteger(0, name + "_close_bg", OBJPROP_BORDER_COLOR, C'220,50,50');
-   ObjectSetInteger(0, name + "_close_bg", OBJPROP_FONTSIZE, 20);
-   ObjectSetString(0, name + "_close_bg", OBJPROP_FONT, "Arial Black");
+   // name already has trailing underscore (e.g., "VISUAL_"), so just add "close_bg"
+   ObjectCreate(0, name + "close_bg", OBJ_BUTTON, 0, 0, 0);
+   ObjectSetInteger(0, name + "close_bg", OBJPROP_CORNER, corner);
+   ObjectSetInteger(0, name + "close_bg", OBJPROP_XDISTANCE, btn_x);
+   ObjectSetInteger(0, name + "close_bg", OBJPROP_YDISTANCE, btn_y);
+   ObjectSetInteger(0, name + "close_bg", OBJPROP_XSIZE, btn_size);
+   ObjectSetInteger(0, name + "close_bg", OBJPROP_YSIZE, btn_size);
+   ObjectSetString(0, name + "close_bg", OBJPROP_TEXT, "✕");
+   ObjectSetInteger(0, name + "close_bg", OBJPROP_COLOR, clrWhite);
+   ObjectSetInteger(0, name + "close_bg", OBJPROP_BGCOLOR, C'239,68,68');
+   ObjectSetInteger(0, name + "close_bg", OBJPROP_BORDER_COLOR, C'220,50,50');
+   ObjectSetInteger(0, name + "close_bg", OBJPROP_FONTSIZE, 20);
+   ObjectSetString(0, name + "close_bg", OBJPROP_FONT, "Arial Black");
 }
 
 //+------------------------------------------------------------------+
