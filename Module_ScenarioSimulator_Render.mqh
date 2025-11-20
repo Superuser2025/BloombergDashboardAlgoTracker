@@ -47,10 +47,10 @@ void RenderScenarioSimulatorPanel(ScenarioResult &current_scenario,
    int y = start_y;
    
    // Main background - REDUCED HEIGHT to fit on screen
-   CreateRect(OBJ_PREFIX + "main_bg", panel_x, y, panel_width, 650, bg_color, true, corner);
+   CreateRect(OBJ_PREFIX + "main_bg", panel_x, y, panel_width, 650, bg_color, false, corner);
    
    // Header
-   CreateRect(OBJ_PREFIX + "header_bg", panel_x, y, panel_width, 70, panel_color, true, corner);
+   CreateRect(OBJ_PREFIX + "header_bg", panel_x, y, panel_width, 70, panel_color, false, corner);
    
    CreateLbl(OBJ_PREFIX + "title", panel_x + 20, y + 15,
             "SCENARIO SIMULATOR", header_color, header_size, "Arial Black", corner);
@@ -58,6 +58,12 @@ void RenderScenarioSimulatorPanel(ScenarioResult &current_scenario,
    CreateLbl(OBJ_PREFIX + "subtitle", panel_x + 20, y + 45,
             "What-If Analysis | See Impact BEFORE You Act",
             info_color, label_size, "Arial", corner);
+   
+   
+   
+   // CLOSE BUTTON
+   
+   CreateCloseButton(OBJ_PREFIX, panel_x, y - 80, panel_width, corner);
    
    y += 80;
    

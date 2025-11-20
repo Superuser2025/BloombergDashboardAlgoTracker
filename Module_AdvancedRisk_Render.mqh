@@ -40,10 +40,10 @@ void RenderAdvancedRiskPanel(AdvancedRiskMetrics &risk,
    int y = start_y;
    
    // Main background - REDUCED HEIGHT to fit on screen
-   CreateRect(PREFIX + "main_bg", panel_x, y, panel_width, 700, bg_color, true, corner);
+   CreateRect(PREFIX + "main_bg", panel_x, y, panel_width, 700, bg_color, false, corner);
    
    // Header
-   CreateRect(PREFIX + "header_bg", panel_x, y, panel_width, 70, panel_color, true, corner);
+   CreateRect(PREFIX + "header_bg", panel_x, y, panel_width, 70, panel_color, false, corner);
    
    CreateLbl(PREFIX + "title", panel_x + 20, y + 15,
             "ADVANCED RISK ANALYTICS", header_color, header_size, "Arial Black", corner);
@@ -51,6 +51,12 @@ void RenderAdvancedRiskPanel(AdvancedRiskMetrics &risk,
    CreateLbl(PREFIX + "subtitle", panel_x + 20, y + 45,
             "VaR | CVaR | Kelly | Monte Carlo | MAE/MFE | Risk Score",
             info_color, label_size, "Arial", corner);
+   
+   
+   
+   // CLOSE BUTTON
+   
+   CreateCloseButton(PREFIX, panel_x, y - 80, panel_width, corner);
    
    y += 80;
    

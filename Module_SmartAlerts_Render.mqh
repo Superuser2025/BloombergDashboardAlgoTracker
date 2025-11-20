@@ -43,10 +43,10 @@ void RenderSmartAlertsPanel(AlertMonitorData &data,
    int total_height = min_height + alert_section_height;
    
    // Main background
-   CreateRect(OBJ_PREFIX + "main_bg", panel_x, y, panel_width, total_height, bg_color, true, corner);
+   CreateRect(OBJ_PREFIX + "main_bg", panel_x, y, panel_width, total_height, bg_color, false, corner);
    
    // Header
-   CreateRect(OBJ_PREFIX + "header_bg", panel_x, y, panel_width, 70, panel_color, true, corner);
+   CreateRect(OBJ_PREFIX + "header_bg", panel_x, y, panel_width, 70, panel_color, false, corner);
    
    CreateLbl(OBJ_PREFIX + "title", panel_x + 20, y + 15,
             "SMART ALERTS & MONITORING", header_color, header_size, "Arial Black", corner);
@@ -55,6 +55,12 @@ void RenderSmartAlertsPanel(AlertMonitorData &data,
                                  data.active_count, data.total_alerts_today);
    CreateLbl(OBJ_PREFIX + "subtitle", panel_x + 20, y + 45,
             subtitle, info_color, label_size, "Arial", corner);
+   
+   
+   
+   // CLOSE BUTTON
+   
+   CreateCloseButton(OBJ_PREFIX, panel_x, y - 80, panel_width, corner);
    
    y += 80;
    

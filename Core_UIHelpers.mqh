@@ -449,5 +449,21 @@ void CreateRiskIndicator(string name, int x, int y, double risk_score, string la
 }
 
 //+------------------------------------------------------------------+
+//| Create Close Button (X) for Modal Panels                         |
+//+------------------------------------------------------------------+
+void CreateCloseButton(string name, int panel_x, int panel_y, int panel_width,
+                      ENUM_BASE_CORNER corner = CORNER_LEFT_UPPER) {
+   int btn_size = 35;
+   int btn_x = panel_x + panel_width - btn_size - 15;
+   int btn_y = panel_y + 15;
+
+   // Close button background
+   CreateRect(name + "_close_bg", btn_x, btn_y, btn_size, btn_size, C'239,68,68', false, corner);
+
+   // X icon
+   CreateLbl(name + "_close_x", btn_x + 10, btn_y + 6, "✕", clrWhite, 18, "Arial Black", corner);
+}
+
+//+------------------------------------------------------------------+
 
 #endif // CORE_UI_HELPERS_MQH

@@ -172,8 +172,8 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
          RenderDashboard();
          ResetButton(sparam);
       }
-      // Module toggle buttons
-      else if(StringFind(sparam, PREFIX + "toggle_risk") >= 0) {
+      // Module toggle buttons AND close buttons
+      else if(StringFind(sparam, PREFIX + "toggle_risk") >= 0 || StringFind(sparam, "RISK_close") >= 0) {
          show_risk_panel = !show_risk_panel;
          if(!show_risk_panel) {
             ClearAdvancedRiskPanel();
@@ -181,7 +181,7 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
          ResetButton(sparam);
          RenderDashboard();
       }
-      else if(StringFind(sparam, PREFIX + "toggle_scenario") >= 0) {
+      else if(StringFind(sparam, PREFIX + "toggle_scenario") >= 0 || StringFind(sparam, "SCENARIO_close") >= 0) {
          show_scenario_panel = !show_scenario_panel;
          if(!show_scenario_panel) {
             ClearScenarioSimulatorPanel();
@@ -189,7 +189,7 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
          ResetButton(sparam);
          RenderDashboard();
       }
-      else if(StringFind(sparam, PREFIX + "toggle_visual") >= 0) {
+      else if(StringFind(sparam, PREFIX + "toggle_visual") >= 0 || StringFind(sparam, "VISUAL_close") >= 0) {
          show_visual_panel = !show_visual_panel;
          if(!show_visual_panel) {
             ClearVisualAnalyticsPanel();
@@ -197,7 +197,7 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
          ResetButton(sparam);
          RenderDashboard();
       }
-      else if(StringFind(sparam, PREFIX + "toggle_alerts") >= 0) {
+      else if(StringFind(sparam, PREFIX + "toggle_alerts") >= 0 || StringFind(sparam, "ALERT_close") >= 0) {
          show_alerts_panel = !show_alerts_panel;
          if(!show_alerts_panel) {
             ClearSmartAlertsPanel();
@@ -205,7 +205,7 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
          ResetButton(sparam);
          RenderDashboard();
       }
-      else if(StringFind(sparam, PREFIX + "toggle_journal") >= 0) {
+      else if(StringFind(sparam, PREFIX + "toggle_journal") >= 0 || StringFind(sparam, "JOURNAL_close") >= 0) {
          show_journal_panel = !show_journal_panel;
          if(!show_journal_panel) {
             ClearTradeJournalPanel();
@@ -213,7 +213,7 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
          ResetButton(sparam);
          RenderDashboard();
       }
-      else if(StringFind(sparam, PREFIX + "toggle_sizing") >= 0) {
+      else if(StringFind(sparam, PREFIX + "toggle_sizing") >= 0 || StringFind(sparam, "SIZING_close") >= 0) {
          show_sizing_panel = !show_sizing_panel;
          if(!show_sizing_panel) {
             ClearPositionSizingPanel();
@@ -221,7 +221,7 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
          ResetButton(sparam);
          RenderDashboard();
       }
-      else if(StringFind(sparam, PREFIX + "toggle_correlation") >= 0) {
+      else if(StringFind(sparam, PREFIX + "toggle_correlation") >= 0 || StringFind(sparam, "CORR_close") >= 0) {
          show_correlation_panel = !show_correlation_panel;
          if(!show_correlation_panel) {
             ClearCorrelationMatrixPanel();
@@ -391,80 +391,70 @@ void RunScenario() {
 //+------------------------------------------------------------------+
 void RenderDashboard() {
    CleanupObjects(PREFIX);
-   
+
    if(is_main_minimized) {
       RenderMinimized();
       return;
    }
-   
-   int y = PanelY;
-   
-   // Main Dashboard
-   y = RenderMainDashboard(y);
-   
-   // Module panels below main dashboard
+
+   // ========== ALWAYS RENDER MAIN DASHBOARD ==========
+   RenderMainDashboard(PanelY);
+
+   // ========== RENDER MODULE PANELS ON TOP (OVERLAPPING) ==========
+   // These panels appear as modal overlays on top of the main dashboard
+   // Fixed position so they don't push content down
+   int modal_y = PanelY + 120;  // Fixed Y position for all modal panels
+
+   // Module panels render on top with OPAQUE backgrounds
    if(show_risk_panel) {
-      y += 20;
-      RenderAdvancedRiskPanel(risk, y, MainPanelWidth, Corner,
+      RenderAdvancedRiskPanel(risk, modal_y, MainPanelWidth, Corner,
                              HeaderFontSize, MetricFontSize, LabelFontSize,
                              ColorHeader, ColorGood, ColorWarning, ColorDanger,
                              ColorInfo, ColorBg, ColorPanel, ColorText);
-      y += 720;  // Reduced from 1120 to fit on screen
    }
-   
+
    if(show_scenario_panel) {
-      y += 20;
-      RenderScenarioSimulatorPanel(scenario, algos, algo_count, y, MainPanelWidth, Corner,
+      RenderScenarioSimulatorPanel(scenario, algos, algo_count, modal_y, MainPanelWidth, Corner,
                                    HeaderFontSize, MetricFontSize, LabelFontSize,
                                    ColorHeader, ColorGood, ColorWarning, ColorDanger,
                                    ColorInfo, ColorBg, ColorPanel, ColorText);
-      y += 670;  // Reduced from 970 to fit on screen
    }
-   
+
    if(show_visual_panel) {
-      y += 20;
-      RenderVisualAnalyticsPanel(visual_data, y, MainPanelWidth, Corner,
+      RenderVisualAnalyticsPanel(visual_data, modal_y, MainPanelWidth, Corner,
                                  HeaderFontSize, MetricFontSize, LabelFontSize,
                                  ColorHeader, ColorGood, ColorWarning, ColorDanger,
                                  ColorInfo, ColorBg, ColorPanel, ColorText);
-      y += 770;  // Reduced from 1200 to fit on screen
    }
-   
+
    if(show_alerts_panel) {
-      y += 20;
-      RenderSmartAlertsPanel(alert_data, y, MainPanelWidth, Corner,
+      RenderSmartAlertsPanel(alert_data, modal_y, MainPanelWidth, Corner,
                             HeaderFontSize, MetricFontSize, LabelFontSize,
                             ColorHeader, ColorGood, ColorWarning, ColorDanger,
                             ColorInfo, ColorBg, ColorPanel, ColorText);
-      y += 800;
    }
-   
+
    if(show_journal_panel) {
-      y += 20;
-      RenderTradeJournalPanel(journal_data, y, MainPanelWidth, Corner,
+      RenderTradeJournalPanel(journal_data, modal_y, MainPanelWidth, Corner,
                              HeaderFontSize, MetricFontSize, LabelFontSize,
                              ColorHeader, ColorGood, ColorWarning, ColorDanger,
                              ColorInfo, ColorBg, ColorPanel, ColorText);
-      y += 1400;
    }
-   
+
    if(show_sizing_panel) {
-      y += 20;
-      RenderPositionSizingPanel(sizing_data, journal_data.overall_stats, y, MainPanelWidth, Corner,
+      RenderPositionSizingPanel(sizing_data, journal_data.overall_stats, modal_y, MainPanelWidth, Corner,
                                HeaderFontSize, MetricFontSize, LabelFontSize,
                                ColorHeader, ColorGood, ColorWarning, ColorDanger,
                                ColorInfo, ColorBg, ColorPanel, ColorText);
-      y += 1100;
    }
-   
+
    if(show_correlation_panel) {
-      y += 20;
-      RenderCorrelationMatrixPanel(correlation_data, y, MainPanelWidth, Corner,
+      RenderCorrelationMatrixPanel(correlation_data, modal_y, MainPanelWidth, Corner,
                                    HeaderFontSize, MetricFontSize, LabelFontSize,
                                    ColorHeader, ColorGood, ColorWarning, ColorDanger,
                                    ColorInfo, ColorBg, ColorPanel, ColorText);
    }
-   
+
    RenderStatusBar();
 }
 

@@ -36,18 +36,21 @@ void RenderVisualAnalyticsPanel(VisualAnalyticsData &data,
    int panel_x = 20;
    int y = start_y;
 
-   // Main background - REDUCED HEIGHT to fit on screen
-   CreateRect(OBJ_PREFIX + "main_bg", panel_x, y, panel_width, 750, bg_color, true, corner);
+   // Main background - OPAQUE (false = foreground, not selectable)
+   CreateRect(OBJ_PREFIX + "main_bg", panel_x, y, panel_width, 750, bg_color, false, corner);
 
-   // Header
-   CreateRect(OBJ_PREFIX + "header_bg", panel_x, y, panel_width, 70, panel_color, true, corner);
-   
+   // Header - OPAQUE
+   CreateRect(OBJ_PREFIX + "header_bg", panel_x, y, panel_width, 70, panel_color, false, corner);
+
    CreateLbl(OBJ_PREFIX + "title", panel_x + 20, y + 15,
             "VISUAL ANALYTICS", header_color, header_size, "Arial Black", corner);
-   
+
    CreateLbl(OBJ_PREFIX + "subtitle", panel_x + 20, y + 45,
             "Equity Curve | Performance Heatmap | Distribution Analysis",
             info_color, label_size, "Arial", corner);
+
+   // CLOSE BUTTON
+   CreateCloseButton(OBJ_PREFIX, panel_x, y, panel_width, corner);
    
    y += 80;
    
