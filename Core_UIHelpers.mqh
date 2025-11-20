@@ -453,15 +453,23 @@ void CreateRiskIndicator(string name, int x, int y, double risk_score, string la
 //+------------------------------------------------------------------+
 void CreateCloseButton(string name, int panel_x, int panel_y, int panel_width,
                       ENUM_BASE_CORNER corner = CORNER_LEFT_UPPER) {
-   int btn_size = 35;
+   int btn_size = 40;
    int btn_x = panel_x + panel_width - btn_size - 15;
    int btn_y = panel_y + 15;
 
-   // Close button background
-   CreateRect(name + "_close_bg", btn_x, btn_y, btn_size, btn_size, C'239,68,68', false, corner);
-
-   // X icon
-   CreateLbl(name + "_close_x", btn_x + 10, btn_y + 6, "✕", clrWhite, 18, "Arial Black", corner);
+   // Create actual BUTTON object (clickable)
+   ObjectCreate(0, name + "_close_bg", OBJ_BUTTON, 0, 0, 0);
+   ObjectSetInteger(0, name + "_close_bg", OBJPROP_CORNER, corner);
+   ObjectSetInteger(0, name + "_close_bg", OBJPROP_XDISTANCE, btn_x);
+   ObjectSetInteger(0, name + "_close_bg", OBJPROP_YDISTANCE, btn_y);
+   ObjectSetInteger(0, name + "_close_bg", OBJPROP_XSIZE, btn_size);
+   ObjectSetInteger(0, name + "_close_bg", OBJPROP_YSIZE, btn_size);
+   ObjectSetString(0, name + "_close_bg", OBJPROP_TEXT, "✕");
+   ObjectSetInteger(0, name + "_close_bg", OBJPROP_COLOR, clrWhite);
+   ObjectSetInteger(0, name + "_close_bg", OBJPROP_BGCOLOR, C'239,68,68');
+   ObjectSetInteger(0, name + "_close_bg", OBJPROP_BORDER_COLOR, C'220,50,50');
+   ObjectSetInteger(0, name + "_close_bg", OBJPROP_FONTSIZE, 20);
+   ObjectSetString(0, name + "_close_bg", OBJPROP_FONT, "Arial Black");
 }
 
 //+------------------------------------------------------------------+

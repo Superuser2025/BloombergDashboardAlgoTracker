@@ -157,6 +157,40 @@ void OnTimer() {
 }
 
 //+------------------------------------------------------------------+
+//| Close All Panels Except One                                       |
+//+------------------------------------------------------------------+
+void CloseAllPanelsExcept(string keep_panel) {
+   if(keep_panel != "risk") {
+      show_risk_panel = false;
+      ClearAdvancedRiskPanel();
+   }
+   if(keep_panel != "scenario") {
+      show_scenario_panel = false;
+      ClearScenarioSimulatorPanel();
+   }
+   if(keep_panel != "visual") {
+      show_visual_panel = false;
+      ClearVisualAnalyticsPanel();
+   }
+   if(keep_panel != "alerts") {
+      show_alerts_panel = false;
+      ClearSmartAlertsPanel();
+   }
+   if(keep_panel != "journal") {
+      show_journal_panel = false;
+      ClearTradeJournalPanel();
+   }
+   if(keep_panel != "sizing") {
+      show_sizing_panel = false;
+      ClearPositionSizingPanel();
+   }
+   if(keep_panel != "correlation") {
+      show_correlation_panel = false;
+      ClearCorrelationMatrixPanel();
+   }
+}
+
+//+------------------------------------------------------------------+
 //| Chart Event                                                       |
 //+------------------------------------------------------------------+
 void OnChartEvent(const int id, const long &lparam, const double &dparam, const string &sparam) {
@@ -177,6 +211,11 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
          show_risk_panel = !show_risk_panel;
          if(!show_risk_panel) {
             ClearAdvancedRiskPanel();
+            is_main_minimized = false;  // Restore main dashboard when closing
+         } else {
+            // Close other panels and minimize main dashboard
+            CloseAllPanelsExcept("risk");
+            is_main_minimized = true;  // Minimize main dashboard when opening module
          }
          ResetButton(sparam);
          RenderDashboard();
@@ -185,6 +224,11 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
          show_scenario_panel = !show_scenario_panel;
          if(!show_scenario_panel) {
             ClearScenarioSimulatorPanel();
+            is_main_minimized = false;  // Restore main dashboard when closing
+         } else {
+            // Close other panels and minimize main dashboard
+            CloseAllPanelsExcept("scenario");
+            is_main_minimized = true;  // Minimize main dashboard when opening module
          }
          ResetButton(sparam);
          RenderDashboard();
@@ -193,6 +237,11 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
          show_visual_panel = !show_visual_panel;
          if(!show_visual_panel) {
             ClearVisualAnalyticsPanel();
+            is_main_minimized = false;  // Restore main dashboard when closing
+         } else {
+            // Close other panels and minimize main dashboard
+            CloseAllPanelsExcept("visual");
+            is_main_minimized = true;  // Minimize main dashboard when opening module
          }
          ResetButton(sparam);
          RenderDashboard();
@@ -201,6 +250,11 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
          show_alerts_panel = !show_alerts_panel;
          if(!show_alerts_panel) {
             ClearSmartAlertsPanel();
+            is_main_minimized = false;  // Restore main dashboard when closing
+         } else {
+            // Close other panels and minimize main dashboard
+            CloseAllPanelsExcept("alerts");
+            is_main_minimized = true;  // Minimize main dashboard when opening module
          }
          ResetButton(sparam);
          RenderDashboard();
@@ -209,6 +263,11 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
          show_journal_panel = !show_journal_panel;
          if(!show_journal_panel) {
             ClearTradeJournalPanel();
+            is_main_minimized = false;  // Restore main dashboard when closing
+         } else {
+            // Close other panels and minimize main dashboard
+            CloseAllPanelsExcept("journal");
+            is_main_minimized = true;  // Minimize main dashboard when opening module
          }
          ResetButton(sparam);
          RenderDashboard();
@@ -217,6 +276,11 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
          show_sizing_panel = !show_sizing_panel;
          if(!show_sizing_panel) {
             ClearPositionSizingPanel();
+            is_main_minimized = false;  // Restore main dashboard when closing
+         } else {
+            // Close other panels and minimize main dashboard
+            CloseAllPanelsExcept("sizing");
+            is_main_minimized = true;  // Minimize main dashboard when opening module
          }
          ResetButton(sparam);
          RenderDashboard();
@@ -225,6 +289,11 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
          show_correlation_panel = !show_correlation_panel;
          if(!show_correlation_panel) {
             ClearCorrelationMatrixPanel();
+            is_main_minimized = false;  // Restore main dashboard when closing
+         } else {
+            // Close other panels and minimize main dashboard
+            CloseAllPanelsExcept("correlation");
+            is_main_minimized = true;  // Minimize main dashboard when opening module
          }
          ResetButton(sparam);
          RenderDashboard();
