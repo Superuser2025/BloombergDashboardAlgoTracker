@@ -96,6 +96,12 @@ int RenderEquityCurve(VisualAnalyticsData &data, int x, int y, int width,
             "EQUITY CURVE", header_color, label_size + 4, "Arial Black", corner);
    curr_y += label_size + 25;
    
+   // DEBUG: Show equity points count
+   string debug_msg = StringFormat("Data Points: %d | Range: $%.2f", data.equity_points, data.max_equity - data.min_equity);
+   CreateLbl(OBJ_PREFIX + "eq_debug", x + 40, curr_y,
+            debug_msg, good_color, label_size, "Arial Bold", corner);
+   curr_y += label_size + 10;
+
    if(data.equity_points < 2) {
       CreateLbl(OBJ_PREFIX + "eq_nodata", x + 40, curr_y,
                "Insufficient data - need more trading history", text_color, label_size, "Arial", corner);
@@ -115,7 +121,7 @@ int RenderEquityCurve(VisualAnalyticsData &data, int x, int y, int width,
    
    double x_step = (double)chart_width / (data.equity_points - 1);
    
-   // Draw equity line - simple step approach
+   // Draw equity line - BIG visible elements for debugging
    for(int i = 0; i < data.equity_points - 1; i++) {
       int x1 = chart_x + (int)(i * x_step);
       int x2 = chart_x + (int)((i + 1) * x_step);
@@ -126,26 +132,26 @@ int RenderEquityCurve(VisualAnalyticsData &data, int x, int y, int width,
       int y1 = chart_y + chart_height - (int)(y1_pct * chart_height);
       int y2 = chart_y + chart_height - (int)(y2_pct * chart_height);
 
-      // Draw point marker (visible dot)
-      CreateRect(OBJ_PREFIX + "eq_dot_" + IntegerToString(i), x1 - 2, y1 - 2,
-                4, 4, info_color, false, corner);
+      // Draw BIG point marker (8x8 pixels - very visible!)
+      CreateRect(OBJ_PREFIX + "eq_dot_" + IntegerToString(i), x1 - 4, y1 - 4,
+                8, 8, info_color, false, corner);
 
-      // Draw connecting line (horizontal then vertical for step effect)
+      // Draw THICK connecting line
       int dx = x2 - x1;
       int dy = y2 - y1;
 
       if(dx > 0) {
-         // Horizontal line from point 1 to point 2's X
-         CreateRect(OBJ_PREFIX + "eq_h_" + IntegerToString(i), x1, y1 - 1,
-                   dx, 2, info_color, false, corner);
+         // THICK Horizontal line (4px tall)
+         CreateRect(OBJ_PREFIX + "eq_h_" + IntegerToString(i), x1, y1 - 2,
+                   dx, 4, info_color, false, corner);
       }
 
       if(dy != 0) {
-         // Vertical line at point 2's X
+         // THICK Vertical line (4px wide)
          int vy = (dy > 0) ? y1 : y2;
          int vh = MathAbs(dy) + 1;
-         CreateRect(OBJ_PREFIX + "eq_v_" + IntegerToString(i), x2 - 1, vy,
-                   2, vh, info_color, false, corner);
+         CreateRect(OBJ_PREFIX + "eq_v_" + IntegerToString(i), x2 - 2, vy,
+                   4, vh, info_color, false, corner);
       }
 
       // Shade drawdown area
@@ -158,14 +164,14 @@ int RenderEquityCurve(VisualAnalyticsData &data, int x, int y, int width,
       }
    }
 
-   // Draw last point
+   // Draw BIG last point (8x8 pixels)
    if(data.equity_points > 0) {
       int last_i = data.equity_points - 1;
       int last_x = chart_x + (int)(last_i * x_step);
       double last_y_pct = (data.equity_curve[last_i].equity - data.min_equity) / range;
       int last_y = chart_y + chart_height - (int)(last_y_pct * chart_height);
-      CreateRect(OBJ_PREFIX + "eq_dot_last", last_x - 2, last_y - 2,
-                4, 4, info_color, false, corner);
+      CreateRect(OBJ_PREFIX + "eq_dot_last", last_x - 4, last_y - 4,
+                8, 8, info_color, false, corner);
    }
    
    // Stats
