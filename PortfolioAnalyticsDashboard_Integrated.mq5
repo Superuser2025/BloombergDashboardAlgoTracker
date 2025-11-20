@@ -216,6 +216,7 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
             // Close other panels and minimize main dashboard
             CloseAllPanelsExcept("risk");
             is_main_minimized = true;  // Minimize main dashboard when opening module
+            UpdateData();  // Generate risk data when opening panel
          }
          ResetButton(sparam);
          RenderDashboard();
@@ -229,6 +230,7 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
             // Close other panels and minimize main dashboard
             CloseAllPanelsExcept("scenario");
             is_main_minimized = true;  // Minimize main dashboard when opening module
+            UpdateData();  // Generate scenario data when opening panel
          }
          ResetButton(sparam);
          RenderDashboard();
@@ -242,6 +244,7 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
             // Close other panels and minimize main dashboard
             CloseAllPanelsExcept("visual");
             is_main_minimized = true;  // Minimize main dashboard when opening module
+            UpdateData();  // Generate visual data when opening panel
          }
          ResetButton(sparam);
          RenderDashboard();
@@ -255,6 +258,7 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
             // Close other panels and minimize main dashboard
             CloseAllPanelsExcept("alerts");
             is_main_minimized = true;  // Minimize main dashboard when opening module
+            UpdateData();  // Generate alerts data when opening panel
          }
          ResetButton(sparam);
          RenderDashboard();
@@ -268,11 +272,12 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
             // Close other panels and minimize main dashboard
             CloseAllPanelsExcept("journal");
             is_main_minimized = true;  // Minimize main dashboard when opening module
+            UpdateData();  // Generate journal data when opening panel
          }
          ResetButton(sparam);
          RenderDashboard();
       }
-      else if(StringFind(sparam, PREFIX + "toggle_sizing") >= 0 || StringFind(sparam, "SIZING_close") >= 0) {
+      else if(StringFind(sparam, PREFIX + "toggle_sizing") >= 0 || StringFind(sparam, "SIZE_close") >= 0) {
          show_sizing_panel = !show_sizing_panel;
          if(!show_sizing_panel) {
             ClearPositionSizingPanel();
@@ -281,6 +286,7 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
             // Close other panels and minimize main dashboard
             CloseAllPanelsExcept("sizing");
             is_main_minimized = true;  // Minimize main dashboard when opening module
+            UpdateData();  // Generate sizing data when opening panel
          }
          ResetButton(sparam);
          RenderDashboard();
@@ -294,6 +300,7 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
             // Close other panels and minimize main dashboard
             CloseAllPanelsExcept("correlation");
             is_main_minimized = true;  // Minimize main dashboard when opening module
+            UpdateData();  // Generate correlation data when opening panel
          }
          ResetButton(sparam);
          RenderDashboard();
