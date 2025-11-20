@@ -115,6 +115,7 @@ int RenderEquityCurve(VisualAnalyticsData &data, int x, int y, int width,
    
    double x_step = (double)chart_width / (data.equity_points - 1);
    
+   // Draw equity line - simple step approach
    for(int i = 0; i < data.equity_points - 1; i++) {
       int x1 = chart_x + (int)(i * x_step);
       int x2 = chart_x + (int)((i + 1) * x_step);
@@ -125,37 +126,46 @@ int RenderEquityCurve(VisualAnalyticsData &data, int x, int y, int width,
       int y1 = chart_y + chart_height - (int)(y1_pct * chart_height);
       int y2 = chart_y + chart_height - (int)(y2_pct * chart_height);
 
-      // Draw line as a series of small rectangles (2px wide line)
+      // Draw point marker (visible dot)
+      CreateRect(OBJ_PREFIX + "eq_dot_" + IntegerToString(i), x1 - 2, y1 - 2,
+                4, 4, info_color, false, corner);
+
+      // Draw connecting line (horizontal then vertical for step effect)
       int dx = x2 - x1;
       int dy = y2 - y1;
-      int line_width = 3;
 
-      if(MathAbs(dx) > MathAbs(dy)) {
-         // More horizontal - draw rectangles along X axis
-         for(int px = 0; px <= dx; px += 2) {
-            int curr_x = x1 + px;
-            int curr_y = y1 + (int)((double)px / dx * dy);
-            CreateRect(OBJ_PREFIX + "eq_pt_" + IntegerToString(i) + "_" + IntegerToString(px),
-                      curr_x, curr_y - line_width/2, 2, line_width, info_color, false, corner);
-         }
-      } else {
-         // More vertical - draw rectangles along Y axis
-         for(int py = 0; py <= MathAbs(dy); py += 2) {
-            int curr_y = (dy > 0) ? (y1 + py) : (y1 - py);
-            int curr_x = x1 + (int)((double)py / MathAbs(dy) * dx);
-            CreateRect(OBJ_PREFIX + "eq_pt_" + IntegerToString(i) + "_" + IntegerToString(py),
-                      curr_x - line_width/2, curr_y, line_width, 2, info_color, false, corner);
-         }
+      if(dx > 0) {
+         // Horizontal line from point 1 to point 2's X
+         CreateRect(OBJ_PREFIX + "eq_h_" + IntegerToString(i), x1, y1 - 1,
+                   dx, 2, info_color, false, corner);
+      }
+
+      if(dy != 0) {
+         // Vertical line at point 2's X
+         int vy = (dy > 0) ? y1 : y2;
+         int vh = MathAbs(dy) + 1;
+         CreateRect(OBJ_PREFIX + "eq_v_" + IntegerToString(i), x2 - 1, vy,
+                   2, vh, info_color, false, corner);
       }
 
       // Shade drawdown area
       if(data.equity_curve[i].is_underwater) {
-         int shade_y = chart_y + chart_height - (int)(y1_pct * chart_height);
-         int shade_h = chart_height - shade_y + chart_y;
+         int shade_y = y1;
+         int shade_h = (chart_y + chart_height) - y1;
 
          CreateRect(OBJ_PREFIX + "eq_dd_" + IntegerToString(i), x1, shade_y,
-                   (int)x_step, shade_h, C'139,0,0,30', true, corner);
+                   (int)x_step + 1, shade_h, C'139,0,0,30', true, corner);
       }
+   }
+
+   // Draw last point
+   if(data.equity_points > 0) {
+      int last_i = data.equity_points - 1;
+      int last_x = chart_x + (int)(last_i * x_step);
+      double last_y_pct = (data.equity_curve[last_i].equity - data.min_equity) / range;
+      int last_y = chart_y + chart_height - (int)(last_y_pct * chart_height);
+      CreateRect(OBJ_PREFIX + "eq_dot_last", last_x - 2, last_y - 2,
+                4, 4, info_color, false, corner);
    }
    
    // Stats
